@@ -1,5 +1,7 @@
 package aladdin.com.model;
 
+import java.util.Date;
+
 public class Person {
 	
 	private String firstName;
