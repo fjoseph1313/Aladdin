@@ -1,5 +1,5 @@
 package aladdin.com.model;
 
-public class Customer extends Person {
+public class Customer{
 
 }
