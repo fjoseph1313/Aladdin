@@ -1,9 +1,21 @@
 package aladdin.com.model;
 
-public class Vendor {
+import javax.persistence.Entity;
+	
+
+@Entity
+public class Vendor extends Person {
 
 	private String businessName;
 	private float profitPercentage;
+	
+	public Vendor() {
+    }
+	
+	public Vendor(Long id, String f, String l, String p, String e, String pass)
+	{
+		super(id, f, l, p, e, pass);
+	}
 
 	public String getBusinessName() {
 		return businessName;
