@@ -1,7 +1,9 @@
 package aladdin.com.model;
 
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+@Entity
 public class Cart {
 	private int quantity;
 	@ManyToOne
