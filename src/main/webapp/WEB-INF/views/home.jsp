@@ -6,10 +6,10 @@
 </head>
 <body>
 <h1>
-	Hello world!  
+	<h1>Aladdin Online Shopping  !!!</h1>
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
-<p><a href= "categoryList.jsp">View Product Categories</a>
+<p><a href= "addCategory.jsp">Add Product Categories</a>
 </body>
 </html>

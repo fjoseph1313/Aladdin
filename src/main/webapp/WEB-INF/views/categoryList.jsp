@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page session="false" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml11.dtd">
 <html>
 <head>
@@ -8,16 +7,15 @@
 <title>Cars currently in the shop</title>
 </head>
 <body>
-	<h1>Cars currently in the shop</h1>
+	<h1>Categories in Aladdin</h1>
 	<table>
-	<c:forEach var="car" items="${cars}">
+	<c:forEach var="category" items="${categories}">
 	<tr>
-		<td>${car.make}</td>
-		<td>${car.model}</td>
-		<td>${car.year}</td>
-		<td>${car.color}</td>
-		<td><a href="cars/${car.id}">edit</a></td>
-		<td><a href="cars/delete/${car.id}">delete</a></td>
+		<td>${category.categoryName}</td>
+		<td>${category.categoryDescription}</td>
+		
+		<td><a href="categories/${category.id}">edit</a></td>
+		<td><a href="categories/delete/${category.id}">delete</a></td>
 	</tr>
 	</c:forEach>
 	</table>
