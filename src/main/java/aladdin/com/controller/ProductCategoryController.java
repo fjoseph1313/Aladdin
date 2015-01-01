@@ -60,6 +60,7 @@ public class ProductCategoryController {
 		pcDao.beginTransaction();
 		ProductCategory cat = (ProductCategory) pcDao.findByPrimaryKey(id);
 		model.addAttribute("category", cat);
+		System.out.println("category selected is : ==========" +cat.getCategoryName());
 		pcDao.commitTransaction();
 		
 		return "editCategory";
