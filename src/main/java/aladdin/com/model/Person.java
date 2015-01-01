@@ -4,8 +4,6 @@ package aladdin.com.model;
 
 import javax.persistence.*;
 import java.util.Date;
-import org.hibernate.tool.hbm2ddl.SchemaExport;
-import org.hibernate.cfg.AnnotationConfiguration;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)

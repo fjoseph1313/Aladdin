@@ -9,9 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import org.hibernate.tool.hbm2ddl.SchemaExport;
-import org.hibernate.cfg.AnnotationConfiguration;
-
 
 @Entity
 public class ProductCategory {
@@ -37,14 +34,5 @@ public class ProductCategory {
 	public void setCategoryDescription(String categoryDescription) {
 		this.categoryDescription = categoryDescription;
 	}
-	
-	
-public static void main(String[] Args)
-	{
-		AnnotationConfiguration config = new AnnotationConfiguration();
-		config.addAnnotatedClass(ProductCategory.class);
-		
-		config.configure();
-		new SchemaExport(config).create(true, true);
-	}
+
 }
