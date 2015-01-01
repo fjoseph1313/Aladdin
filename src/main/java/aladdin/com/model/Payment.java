@@ -1,9 +1,6 @@
 package aladdin.com.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class Payment {
@@ -13,9 +10,10 @@ public class Payment {
 	private Long id;
 	private double paymentAmount;
 	private String paymentType;
-	private Order order;
 	@OneToOne
-	private TransactionHistory history;
+	//@Column(name = "payment_order")
+	private Order order;
+	//private TransactionHistory history;
 
 	public Long getId() {
 		return id;
@@ -49,13 +47,13 @@ public class Payment {
 		this.order = order;
 	}
 
-	public TransactionHistory getHistory() {
+	/*public TransactionHistory getHistory() {
 		return history;
 	}
 
 	public void setHistory(TransactionHistory history) {
 		this.history = history;
-	}
+	}*/
 	
 	
 

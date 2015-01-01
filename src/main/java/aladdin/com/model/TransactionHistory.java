@@ -2,9 +2,7 @@ package aladdin.com.model;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class TransactionHistory {
@@ -13,6 +11,7 @@ public class TransactionHistory {
 	@GeneratedValue
 	private Long id;
 	private Date transactionDate;
+	@OneToOne
 	private Payment payment;
 	
 	

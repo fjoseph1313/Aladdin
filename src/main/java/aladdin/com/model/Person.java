@@ -1,13 +1,11 @@
+//C:\_mycode>java -cp "C:\_hiblib\*";C:\_mycode test.Person
+
 package aladdin.com.model;
 
+import javax.persistence.*;
 import java.util.Date;
-
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
+import org.hibernate.cfg.AnnotationConfiguration;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -21,10 +19,9 @@ public class Person {
 	private String phoneNumber;
 	private String emailAddress;
 	private String password;
-
 	@Embedded
 	private Address address;
-
+	
 	public Person() {
 
 	}
@@ -37,7 +34,7 @@ public class Person {
         this.emailAddress = emailaddress;
         this.password = password;
     }
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -93,11 +90,11 @@ public class Person {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
 	public Address getAddress() {
 		return address;
 	}
-
+	
 	public void setAddress(Address address) {
 		this.address = address;
 	}

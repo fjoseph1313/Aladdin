@@ -9,6 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.tool.hbm2ddl.SchemaExport;
+import org.hibernate.cfg.AnnotationConfiguration;
+
 
 @Entity
 public class ProductCategory {
@@ -18,7 +21,6 @@ public class ProductCategory {
 	private Long id;
 	private String categoryName;
 	private String categoryDescription;
-	
 	@OneToMany(mappedBy = "productCategory", fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Product.class)
 	private List<Product> products;
 	
@@ -37,5 +39,12 @@ public class ProductCategory {
 	}
 	
 	
-
+public static void main(String[] Args)
+	{
+		AnnotationConfiguration config = new AnnotationConfiguration();
+		config.addAnnotatedClass(ProductCategory.class);
+		
+		config.configure();
+		new SchemaExport(config).create(true, true);
+	}
 }

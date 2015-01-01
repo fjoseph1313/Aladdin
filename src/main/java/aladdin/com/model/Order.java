@@ -3,16 +3,10 @@ package aladdin.com.model;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
+@Table(name="customer_order")
 public class Order {
 
 	@Id
@@ -24,8 +18,6 @@ public class Order {
 	private Date orderCreateDate;
 	@ManyToOne
 	private Customer customer; //maps to customer(one to many)
-	@OneToOne
-	private Payment payment;
 	@OneToMany(mappedBy = "order", targetEntity = Cart.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Cart> cart;
 	
@@ -66,12 +58,7 @@ public class Order {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-	public Payment getPayment() {
-		return payment;
-	}
-	public void setPayment(Payment payment) {
-		this.payment = payment;
-	}
+	
 	public List<Cart> getCart() {
 		return cart;
 	}
