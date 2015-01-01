@@ -2,6 +2,8 @@ package aladdin.com.controller;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +17,9 @@ import aladdin.com.model.ProductCategory;
 
 @Controller
 public class ProductCategoryController {
-
-	DAOFactory factory = DAOFactory.getFactory();
-	ProductCategoryDAO  pcDao = factory.getProductCategoryDAO();
+	//@Resource
+	private DAOFactory factory = DAOFactory.getFactory();
+	private ProductCategoryDAO  pcDao = factory.getProductCategoryDAO();
 	
 	@RequestMapping("/")
 	public String redirectRoot() {
@@ -49,6 +51,27 @@ public class ProductCategoryController {
 		ProductCategory cat = (ProductCategory) pcDao.findByPrimaryKey(id);
 		pcDao.delete(cat);
 		pcDao.commitTransaction();
+		return "redirect:/categories";
+	}
+	
+	@RequestMapping(value="/categories/{id}", method = RequestMethod.GET)
+	public String findCategoryById(@PathVariable Long id, Model model)
+	{
+		pcDao.beginTransaction();
+		ProductCategory cat = (ProductCategory) pcDao.findByPrimaryKey(id);
+		model.addAttribute("category", cat);
+		pcDao.commitTransaction();
+		
+		return "editCategory";
+	}
+	
+	@RequestMapping(value="/categories/{id}", method = RequestMethod.POST)
+	public String editCategory(@PathVariable Long id, ProductCategory category)
+	{
+		pcDao.beginTransaction();
+		pcDao.save(category); //category id set by spring binding
+		pcDao.commitTransaction();
+		
 		return "redirect:/categories";
 	}
 }
