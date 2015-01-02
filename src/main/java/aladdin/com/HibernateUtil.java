@@ -34,7 +34,7 @@ public class HibernateUtil
 		{
 			Configuration config = HibernateUtil.getInitializedConfiguration();
 			factory = config.buildSessionFactory();
-		}
+		}	
 		Session hibernateSession = factory.getCurrentSession();
 		
 		return hibernateSession;
