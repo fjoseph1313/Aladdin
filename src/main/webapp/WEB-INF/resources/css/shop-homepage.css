@@ -1,0 +1,89 @@
+/*!
+ * Start Bootstrap - Shop Homepage HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+body {
+	padding-top: 70px;
+	/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
+
+/*******************
+ALL CUSTOM CSS STARTS HERE
+
+*********/
+.registrationForm .signIn {
+	margin: 13px 0 0 98px;
+	width: 103px;
+}
+
+#searchProduct {
+	padding: 0px;
+	margin: 0px;
+}
+
+.navbar-nav {
+	float: right;
+}
+
+.container {
+	margin-top: 10px;
+}
+
+.navbar-nav .cart_img {
+	width: 30px;
+	margin-top: -4px;
+}
+
+#countryList {
+	
+	font-size: 14px;
+}
+
+/*******************
+ALL CUSTOM CSS ENDS HERE
+
+*********/
+.slide-image {
+	width: 100%;
+}
+
+.carousel-holder {
+	margin-bottom: 30px;
+}
+
+.carousel-control, .item {
+	border-radius: 4px;
+}
+
+.caption {
+	height: 130px;
+	overflow: hidden;
+}
+
+.caption h4 {
+	white-space: nowrap;
+}
+
+.thumbnail img {
+	width: 100%;
+}
+
+.ratings {
+	padding-right: 10px;
+	padding-left: 10px;
+	color: #d17581;
+}
+
+.thumbnail {
+	padding: 0;
+}
+
+.thumbnail .caption-full {
+	padding: 9px;
+	color: #333;
+}
+
+footer {
+	margin: 50px 0;
+}
