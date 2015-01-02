@@ -9,7 +9,7 @@
 				class="icon-bar"></span>
 		</button>
 		<a class="navbar-brand" href="#"><img
-			src="<c:url value="resources/images/AladdinLOGO.png" />"
+			src="<c:url value="/resources/images/AladdinLOGO.png" />"
 			style="display: block; width: 150px; height: 30px" alt="" /></a>
 	</div>
 	<!-- Collect the nav links, forms, and other content for toggling -->
@@ -21,7 +21,7 @@
 			<li><a href="#">Services</a></li>
 			<li><a href="#">My Account</a></li>
 			<li><a href="#">Contact</a></li>
-			<li><a href="#" style="color: white;"><img src="resources/images/shoppingCart.png" class="cart_img" style="display:inline"/> (10)</a></li>
+			<li><a href="#" style="color: white;"><img src="<c:url value="/resources/images/shoppingCart.png" />" class="cart_img" style="display:inline"/> (10)</a></li>
 		</ul>
 	</div>
 	<!-- /.navbar-collapse -->

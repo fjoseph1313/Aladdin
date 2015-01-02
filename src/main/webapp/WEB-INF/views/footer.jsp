@@ -15,10 +15,10 @@
 <!-- /.container -->
 
 <!-- jQuery -->
-<script src="<c:url value="resources/js/jquery.js" />"></script>
-<script src="<c:url value="resources/js/jquery-ui.js" />"></script>
-<script src="<c:url value="resources/js/jquery.validationEngine.js" />"></script>
-<script src="<c:url value="resources/js/jquery.validationEngine-en.js" />"></script>
+<script src="<c:url value="/resources/js/jquery.js" />"></script>
+<script src="<c:url value="/resources/js/jquery-ui.js" />"></script>
+<script src="<c:url value="/resources/js/jquery.validationEngine.js" />"></script>
+<script src="<c:url value="/resources/js/jquery.validationEngine-en.js" />"></script>
 <script>
 	$(function() {
 		$("#datepicker").datepicker();
@@ -35,4 +35,4 @@
 </script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="<c:url value="resources/js/bootstrap.min.js" />"></script>
+<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
