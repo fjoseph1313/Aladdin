@@ -45,7 +45,10 @@
 						</fieldset>
 
 						<a href=" <spring:url value="/product/add" />" class="btn btndefault">
-							<span class="glyphicon-hand-left glyphicon"></span> Add New Product
+							 Add New Product
+						</a><br/>
+						<a href=" <spring:url value="/product/addCategory" />" class="btn btndefault">
+							 Add New Category
 						</a>
 					</div>
 

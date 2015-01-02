@@ -42,6 +42,10 @@
 		<property name="username" value="aladdin"></property>
 		<property name="password" value="aladdin"></property>
 	</bean>
+	<bean id="productDAO" class="aladdin.com.dao.ProductDAOImpl">
+	</bean>
+	<bean id="productCategoryDAO" class="aladdin.com.dao.ProductCategoryDAOImpl">
+	</bean>
 	<context:annotation-config />
 	<context:component-scan base-package="aladdin.com" />
 
