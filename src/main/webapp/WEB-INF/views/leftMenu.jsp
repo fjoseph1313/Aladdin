@@ -19,7 +19,7 @@
 		<p>
 
 
-			<select class="form-control">
+			<select class="form-control" >
 				<c:forEach var="listValue" items="${productcategoryList}">
 					<option value="${listValue}">${listValue}</option>
 				</c:forEach>
