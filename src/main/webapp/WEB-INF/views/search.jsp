@@ -38,6 +38,7 @@
 				<div class="row">
 					<h3 style="margin-left: 16px">Search Results</h3>
 
+<<<<<<< HEAD
 					<c:if test="${fn:length(b64s)> 0}">
 						<c:forEach var="listValue" items="${b64s}">
 
@@ -65,6 +66,30 @@
 												class="glyphicon glyphicon-star"></span>
 										</p>
 									</div>
+=======
+					<c:forEach var="product" items="${searchProducts}">
+						<div class="col-sm-4 col-lg-4 col-md-4">
+							<div class="thumbnail">
+								<img src="data:image/jpg;base64,${product.byteString}" alt="" height="50" width="50">
+								<div class="caption">
+									<h4 class="pull-right">$${product.price}</h4>
+									<h4>
+										<a href="#">${product.productName}</a>
+									</h4>
+									<h5>
+										${product.productDescription}
+									</h5>
+								</div>
+								<div class="ratings">
+									<p class="pull-right">15 reviews</p>
+									<p>
+										<span class="glyphicon glyphicon-star"></span> <span
+											class="glyphicon glyphicon-star"></span> <span
+											class="glyphicon glyphicon-star"></span> <span
+											class="glyphicon glyphicon-star"></span> <span
+											class="glyphicon glyphicon-star"></span>
+									</p>
+>>>>>>> branch 'master' of https://github.com/fjoseph1313/Aladdin
 								</div>
 							</div>
 						</c:forEach>

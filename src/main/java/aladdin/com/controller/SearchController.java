@@ -82,12 +82,13 @@ public class SearchController {
 		List<Product> ps = query.list();
 		productDAO.commitTransaction();
 
-		List<String> b64Images = new ArrayList<String>();
+		List<Product> searchProducts = new ArrayList<Product>();
 		for (Product p : ps) {
-			b64Images.add(b64Converter(p.getProductImage()));
+			p.setByteString(b64Converter(p.getProductImage()));
+			searchProducts.add(p);
 		}
-
-		model.addAttribute("b64s", b64Images);
+		
+		model.addAttribute("searchProducts", searchProducts);
 
 		return "search";
 	}
