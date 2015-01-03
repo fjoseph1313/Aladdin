@@ -10,7 +10,8 @@
 
 <div class="col-sm-12" id="searchProduct">
 	<p class="lead">Search By</p>
-	<form class="form-horizontal" id="searchForm" action="search" method="post">
+	<form class="form-horizontal" id="searchForm" action="search"
+		method="post">
 		<p>Keyword</p>
 		<p>
 			<input type="text" class="form-control" name="pKey" />
@@ -19,11 +20,10 @@
 		<p>
 
 
-			<select class="form-control" >
+			<select name="pCat" class="form-control">
 				<c:forEach var="listValue" items="${productcategoryList}">
 					<option value="${listValue}">${listValue}</option>
 				</c:forEach>
-
 			</select>
 		</p>
 		<p>

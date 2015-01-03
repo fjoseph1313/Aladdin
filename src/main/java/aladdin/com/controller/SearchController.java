@@ -58,27 +58,29 @@ public class SearchController {
 
 	}
 
-	 @RequestMapping(value = "/search", method = RequestMethod.POST)
-	 public String showImage(@RequestParam("pKey") String key,
-	 HttpServletResponse response, HttpServletRequest request,
-	 Model model) throws ServletException, IOException {
-	
-	 productDAO.beginTransaction();
-	 String hql = "FROM Product p WHERE p.productName LIKE :searchKey";
-	 Query query = HibernateUtil.getSession().createQuery(hql);
-	 query.setParameter("searchKey", "%" + key + "%");
-	 List<Product> ps = query.list();
-	 productDAO.commitTransaction();
-	
-	 List<String> b64Images = new ArrayList<String>();
-	 for (Product p : ps) {
-	 b64Images.add(b64Converter(p.getProductImage()));
-	 }
-	
-	 model.addAttribute("b64s", b64Images);
-	
-	 return "search";
-	 }
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public String showImage(@RequestParam("pKey") String key,
+			@RequestParam("pCat") String cat, HttpServletResponse response,
+			HttpServletRequest request, Model model) throws ServletException,
+			IOException {
+
+		productDAO.beginTransaction();
+		String hql = "FROM Product p WHERE p.productName LIKE :searchKey AND p.productCategory.categoryName = :searchCat";
+		Query query = HibernateUtil.getSession().createQuery(hql);
+		query.setParameter("searchKey", "%" + key + "%");
+		query.setParameter("searchCat", cat);
+		List<Product> ps = query.list();
+		productDAO.commitTransaction();
+
+		List<String> b64Images = new ArrayList<String>();
+		for (Product p : ps) {
+			b64Images.add(b64Converter(p.getProductImage()));
+		}
+
+		model.addAttribute("b64s", b64Images);
+
+		return "search";
+	}
 
 	// this can be a service
 	public String b64Converter(byte[] bytes) throws IOException {
