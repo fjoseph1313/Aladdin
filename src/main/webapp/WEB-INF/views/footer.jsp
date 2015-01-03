@@ -30,17 +30,19 @@
 		jQuery("#registrationFormId").validationEngine({
 			autoHidePrompt : true
 		});
-		
+
 		jQuery("#addProductRegistrationForm").validationEngine({
 			autoHidePrompt : true
 		});
-		
+
+		jQuery("#searchForm").validationEngine({
+			autoHidePrompt : true
+		});
+
 		jQuery("#addCategoryForm").validationEngine({
 			autoHidePrompt : true
 		});
-		
-		
-		
+
 	});
 </script>
 

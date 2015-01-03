@@ -14,7 +14,10 @@
 		method="post">
 		<p>Keyword</p>
 		<p>
-			<input type="text" class="form-control" name="pKey" />
+			<input type="text"
+				class="form-control form-control validate[required] text-input"
+				name="pKey"
+				data-errormessage-value-missing="Please provide a keyword is required!" />
 		</p>
 		<p>Category</p>
 		<p>

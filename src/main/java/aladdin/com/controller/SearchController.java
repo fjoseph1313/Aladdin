@@ -64,6 +64,16 @@ public class SearchController {
 			HttpServletRequest request, Model model) throws ServletException,
 			IOException {
 
+		/*** Loading list in the dropdown ****/
+
+		productCategoryDAO.beginTransaction();
+		List<ProductCategory> productcategoryList = productCategoryDAO.findAll(
+				0, 1000);
+		productCategoryDAO.commitTransaction();
+		model.addAttribute("productcategoryList", productcategoryList);
+
+		/*** Loading list in the dropdown ****/
+
 		productDAO.beginTransaction();
 		String hql = "FROM Product p WHERE p.productName LIKE :searchKey AND p.productCategory.categoryName = :searchCat";
 		Query query = HibernateUtil.getSession().createQuery(hql);
