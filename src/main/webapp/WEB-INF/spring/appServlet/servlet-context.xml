@@ -15,7 +15,21 @@
 		infrastructure -->
 
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+	<annotation-driven conversion-service="conversionService" />
+
+	<beans:bean id="conversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<beans:property name="converters">
+
+
+			<beans:set>
+
+				<beans:bean class="aladdin.com.converter.NameToProductCategoryConverter" />
+
+			</beans:set>
+
+		</beans:property>
+	</beans:bean>
 
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
@@ -35,7 +49,7 @@
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 
 		<!-- setting maximum upload size -->
-		
+
 
 	</beans:bean>
 

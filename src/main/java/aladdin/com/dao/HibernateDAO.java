@@ -20,6 +20,7 @@ public abstract class HibernateDAO< T , ID extends Serializable> implements Gene
 		return (T) HibernateUtil.getSession().load(persistenceClass, id);
 	}
 	
+	
 	public List<T> findByExample(T exampleInstance, String[] excludeProperty)
 	{
 		Criteria crit = HibernateUtil.getSession().createCriteria(persistenceClass);

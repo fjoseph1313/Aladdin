@@ -10,10 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,8 +50,13 @@ public class ProductController {
 	 */
 
 	@RequestMapping
-	public String getProductPage() {
+	public String getProductPage(Model model) {
 
+		productCategoryDAO.beginTransaction();
+		List<ProductCategory> productcategoryList = productCategoryDAO.findAll(
+				0, 1000);
+		productCategoryDAO.commitTransaction();
+		model.addAttribute("productcategoryList", productcategoryList);
 		return "product";
 	}
 
