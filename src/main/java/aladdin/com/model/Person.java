@@ -17,6 +17,7 @@ public class Person {
 	private String phoneNumber;
 	private String emailAddress;
 	private String password;
+	private Boolean isActive;
 	@Embedded
 	private Address address;
 	
@@ -24,22 +25,13 @@ public class Person {
 
 	}
 	
-	public Person(Long id, String firstname, String lastname, String phoneNumber, String emailaddress, String password) {
-        this.id = id;
+	public Person(String firstname, String lastname, String phoneNumber, String emailaddress, String password) {
         this.firstName = firstname;
         this.lastName = lastname;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailaddress;
         this.password = password;
     }
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getFirstName() {
 		return firstName;
@@ -65,6 +57,10 @@ public class Person {
 		return password;
 	}
 
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
@@ -87,6 +83,10 @@ public class Person {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 	
 	public Address getAddress() {

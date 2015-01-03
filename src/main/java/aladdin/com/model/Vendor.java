@@ -12,9 +12,9 @@ public class Vendor extends Person {
 	public Vendor() {
     }
 	
-	public Vendor(Long id, String f, String l, String p, String e, String pass)
+	public Vendor(String f, String l, String p, String e, String pass)
 	{
-		super(id, f, l, p, e, pass);
+		super(f, l, p, e, pass);
 	}
 
 	public String getBusinessName() {

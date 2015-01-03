@@ -10,6 +10,20 @@ public class Address {
 	private String zip;
 	private String country;
 
+	public Address() {
+
+	}
+
+	public Address(String street, String state, String city, String zip,
+			String country) {
+		super();
+		this.street = street;
+		this.state = state;
+		this.city = city;
+		this.zip = zip;
+		this.country = country;
+	}
+
 	public String getStreet() {
 		return street;
 	}

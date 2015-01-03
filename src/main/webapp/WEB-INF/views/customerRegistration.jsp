@@ -8,7 +8,7 @@
 	<jsp:param value="a" name="a" />
 </jsp:include>
 
-<title>Aladdin - Registration</title>
+<title>Aladdin - Customer Registration</title>
 </head>
 
 <body>
@@ -39,9 +39,9 @@
 
 					<div class="col-md-12">
 						<fieldset>
-							<legend class="registrationLegend">Registration</legend>
+							<legend class="registrationLegend">Customer Registration</legend>
 							<form:form class="form-horizontal registrationForm"
-								id="registrationFormId">
+								id="registrationFormId" action="./customer-register/submit" method="post">
 
 								<div class="form-group">
 									<label for="inputFirstName" class="col-sm-2 control-label">First
@@ -50,7 +50,7 @@
 										<input type="text"
 											class="form-control validate[required] text-input" data-errormessage-value-missing="First Name is required!" 
 											id="inputFirstName" placeholder="First Name"
-											style="width: 200px">
+											style="width: 200px" name="firstName">
 									</div>
 								</div>
 
@@ -59,7 +59,7 @@
 										Name</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control validate[required] text-input" id="inputLastName" data-errormessage-value-missing="Last Name is required!"
-											placeholder="Last Name" style="width: 200px">
+											placeholder="Last Name" style="width: 200px" name="lastName">
 									</div>
 								</div>
 
@@ -69,7 +69,7 @@
 									<div class="col-sm-10">
 
 										<input type="text" id="datepicker" class="form-control validate[required] text-input"
-											style="width: 200px" placeholder="Date of Birth" data-errormessage-value-missing="Date of Birth is required!" >
+											style="width: 200px" name="dateOfBirth" placeholder="Date of Birth" data-errormessage-value-missing="Date of Birth is required!" >
 									</div>
 								</div>
 
@@ -78,28 +78,28 @@
 										Number</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control validate[required] text-input" id="inputPhone"
-											placeholder="Phone" style="width: 200px" data-errormessage-value-missing="Phone Number is required!">
+											placeholder="Phone" style="width: 200px" name="phoneNumber" data-errormessage-value-missing="Phone Number is required!">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="inputEmail" class="col-sm-2 control-label">Email</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control validate[custom[email]] validate[required] text-input" id="inputEmail"
-											placeholder="Email" style="width: 200px" data-errormessage-value-missing="Email is required!">
+											placeholder="Email" style="width: 200px" name="emailAddress" data-errormessage-value-missing="Email is required!">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="inputPassword" class="col-sm-2 control-label">Password</label>
 									<div class="col-sm-10">
 										<input type="password" class="form-control validate[required] text-input" id="inputPassword"
-											placeholder="Password" style="width: 200px" data-errormessage-value-missing="Password is required!">
+											placeholder="Password" style="width: 200px" name="password" data-errormessage-value-missing="Password is required!">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="countryList" class="col-sm-2 control-label"
 										style="margin-right: 14px;">Country</label> <select
 										class="form-control input-lg validate[required]" id="countryList"
-										style="width: 200px" data-errormessage-value-missing="Please select a country!">
+										style="width: 200px" name="address.country" data-errormessage-value-missing="Please select a country!">
 										<option value="">Select a country</option>
 										<option value="AF">Afghanistan</option>
 										<option value="AL">Albania</option>
@@ -354,28 +354,28 @@
 									<label for="inputState" class="col-sm-2 control-label">State</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control validate[required] text-input" id="inputState"
-											placeholder="State" style="width: 200px" data-errormessage-value-missing="State is required!">
+											placeholder="State" style="width: 200px" name="address.state" data-errormessage-value-missing="State is required!">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="inputCity" class="col-sm-2 control-label">City</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control validate[required] text-input" id="inputCity"
-											placeholder="City" style="width: 200px" data-errormessage-value-missing="City is required!">
+											placeholder="City" style="width: 200px" name="address.city" data-errormessage-value-missing="City is required!">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="inputStreet" class="col-sm-2 control-label">Street</label>
 									<div class="col-sm-10">
-										<textarea name="comment" class="form-control validate[required] text-input" id="inputStreet"
-											style="width: 200px" placeholder="Give Street Address" data-errormessage-value-missing="Street Adress is required!"></textarea>
+										<textarea class="form-control validate[required] text-input" id="inputStreet"
+											style="width: 200px" name="address.street" placeholder="Give Street Address" data-errormessage-value-missing="Street Adress is required!"></textarea>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="inputZip" class="col-sm-2 control-label">Zip</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control validate[required] text-input" id="inputZip"
-											placeholder="Zip Code" style="width: 200px" data-errormessage-value-missing="zip is required!">
+											placeholder="Zip Code" style="width: 200px" name="address.zip" data-errormessage-value-missing="Zip is required!">
 									</div>
 								</div>
 

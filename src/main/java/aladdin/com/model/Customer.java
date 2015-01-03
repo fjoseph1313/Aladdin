@@ -14,11 +14,12 @@ public class Customer extends Person{
 	private List<Order> order;
 	
 	public Customer() {
+		
     }
 	
-	public Customer(Long id, String f, String l, String p, String e, String pass)
+	public Customer(String f, String l, String p, String e, String pass)
 	{
-		super(id, f, l, p, e, pass);
+		super(f, l, p, e, pass);
 	}
 
 	public List<Order> getOrder() {
