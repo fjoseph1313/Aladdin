@@ -2,14 +2,19 @@ package aladdin.com.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import aladdin.com.dao.ProductCategoryDAOImpl;
+import aladdin.com.model.ProductCategory;
 
 /**
  * Handles requests for the application home page.
@@ -17,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 
+	@Autowired
+	private ProductCategoryDAOImpl productCategoryDAO;
 	private static final Logger logger = LoggerFactory
 			.getLogger(HomeController.class);
 
@@ -34,6 +41,11 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 
 		model.addAttribute("serverTime", formattedDate);
+		productCategoryDAO.beginTransaction();
+		List<ProductCategory> productcategoryList = productCategoryDAO.findAll(
+				0, 1000);
+		productCategoryDAO.commitTransaction();
+		model.addAttribute("productcategoryList", productcategoryList);
 
 		return "index";
 	}

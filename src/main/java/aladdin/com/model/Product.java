@@ -23,6 +23,8 @@ public class Product {
 
 	@Transient
 	private MultipartFile multiPartToByte;
+	@Transient
+	private String byteString;
 	@Lob
 	private byte[] productImage;
 	private Integer productQuantity;
@@ -117,6 +119,14 @@ public class Product {
 		this.multiPartToByte = multiPartToByte;
 	}
 
+	public String getByteString() {
+		return byteString;
+	}
+	
+	public void setByteString(String byteString) {
+		this.byteString = byteString;
+	}
+	
 	public byte[] byteConversion(MultipartFile m) {
 
 		try {

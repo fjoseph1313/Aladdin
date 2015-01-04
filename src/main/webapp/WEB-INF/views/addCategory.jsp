@@ -43,7 +43,7 @@
 							<legend class="registrationLegend">Add New Category</legend>
 
 							<form:form modelAttribute="newCategory" class="form-horizontal"
-								enctype="multipart/form-data">
+								enctype="multipart/form-data" id="addCategoryForm">
 								<div class="col-lg-10">
 									<div class="form-group">
 										<label for="inputCategoryName" class="col-sm-2 control-label">Category

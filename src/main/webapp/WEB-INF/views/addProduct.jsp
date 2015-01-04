@@ -43,7 +43,7 @@
 							<legend class="registrationLegend">Add New Product</legend>
 
 							<form:form modelAttribute="newProduct" class="form-horizontal"
-								enctype="multipart/form-data">
+								enctype="multipart/form-data" id="addProductRegistrationForm">
 								<div class="col-lg-10">
 									<div class="form-group">
 										<label for="inputProductName" class="col-sm-2 control-label">Product
@@ -112,7 +112,7 @@
 										<label for="productCategory" class="col-sm-2 control-label">Product
 											Category</label>
 										<div class="col-sm-10">
-										<form:select path="productCategory">
+										<form:select path="productCategory" id="inputProductCategory" >
     										<form:options items="${productcategoryList}" />
 										</form:select>
 										
