@@ -96,6 +96,13 @@
 									</div>
 								</div>
 								<div class="form-group">
+									<label for="inputConfirmPassword" class="col-sm-2 control-label">Confirm Password</label>
+									<div class="col-sm-10">
+										<input type="password" class="form-control validate[required,equals[inputPassword]] text-input" id="inputConfirmPassword"
+											placeholder="Confirm Password" style="width: 200px" name="confirmPassword" data-errormessage-value-missing="Confirm Password is required!">
+									</div>
+								</div>
+								<div class="form-group">
 									<label for="countryList" class="col-sm-2 control-label"
 										style="margin-right: 14px;">Country</label> <select
 										class="form-control input-lg validate[required]" id="countryList"

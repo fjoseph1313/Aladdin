@@ -41,7 +41,7 @@
 						<h2 class="text-center login-title">Registration Success</h2>
 						<div class="panel panel-primary">
 							<h3 class="text-center">Welcome ${fullName} </h3>
-							<h5 class="text-center">An Email has been send to your email to verify your account.</h5>
+							<h5 class="text-center">A confirmation email has been send to your email address.</h5>
 						</div>
 					</div>
 

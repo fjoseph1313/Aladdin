@@ -58,9 +58,15 @@ public class RegistrationController {
 		String fullName = customer.getFirstName() + " " + customer.getLastName();
 		model.addAttribute("fullName", fullName);
 		
+		String emailSubject = "Customer registration success to Aladdin";
+		String emailBody = "Welcome " + fullName + ",\n\n"
+				+ "You have successfully registered to Aladdin.\n\n"
+				+ "Your email: " + customer.getEmailAddress() + "\n\n"
+				+ "Your password: " + customer.getPassword();
+		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Mail.xml");
     	MailMail mm = (MailMail) context.getBean("mailMail");
-    	mm.sendMail("Aladdin E-Commerce <aladdin.mscs@gmail.com>", customer.getEmailAddress(), "aladdin.mscs@gmail.com", "Welcome Customer", "Welcome to Aladin.\n\n You have successfully registered to Aladin.");
+    	mm.sendMail("Aladdin <aladdin.mscs@gmail.com>", customer.getEmailAddress(), "aladdin.mscs@gmail.com", emailSubject, emailBody);
 
 		return "registrationSuccess";
 	}
@@ -102,9 +108,15 @@ public class RegistrationController {
 		String fullName = vendor.getFirstName() + " " + vendor.getLastName();
 		model.addAttribute("fullName", fullName);
 		
+		String emailSubject = "Vendor registration success to Aladdin";
+		String emailBody = "Welcome " + fullName + ",\n\n"
+				+ "You have successfully registered to Aladdin.\n\n"
+				+ "Your email: " + vendor.getEmailAddress() + "\n\n"
+				+ "Your password: " + vendor.getPassword();
+		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Mail.xml");
     	MailMail mm = (MailMail) context.getBean("mailMail");
-    	mm.sendMail("Aladdin E-Commerce <aladdin.mscs@gmail.com>", vendor.getEmailAddress(), "aladdin.mscs@gmail.com", "Welcome Vendor", "Welcome to Aladin.\n\n You have successfully registered to Aladin.");
+    	mm.sendMail("Aladdin <aladdin.mscs@gmail.com>", vendor.getEmailAddress(), "aladdin.mscs@gmail.com", emailSubject, emailBody);
 
 		return "registrationSuccess";
 	}
