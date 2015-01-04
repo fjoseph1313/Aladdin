@@ -16,7 +16,7 @@
 
 	<!-- Navigation -->
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<jsp:include page="menu.jsp">
+		<jsp:include page="menuAdmin.jsp">
 			<jsp:param value="a" name="a" />
 		</jsp:include>
 	</nav>
@@ -27,14 +27,14 @@
 		<div class="row">
 
 			<div class="col-md-3">
-				<jsp:include page="leftMenu.jsp">
+				<jsp:include page="leftMenuVendor.jsp">
 					<jsp:param value="a" name="a" />
 				</jsp:include>
 			</div>
 
 
 
-			<div class="col-md-9">
+			<div class="col-md-9" style="min-height:500px">
 
 				<div class="row carousel-holder">
 
@@ -44,20 +44,11 @@
 
 						</fieldset>
 
-      
-
-						Thanks Admin!!! For logout click here 
-						<c:url value="/j_spring_security_logout" var="logoutUrl" />
-<a href="${logoutUrl}">Log Out</a>
-
-||||
-<a href="<c:url value="/j_spring_security_logout" />"
-    class="btn btn-danger btn-mini pull-right">logout</a>
-
-
+					Here vendor can do vendor related actions.
 					</div>
 
 				</div>
+
 
 			</div>
 

@@ -16,7 +16,7 @@
 
 	<!-- Navigation -->
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<jsp:include page="menu.jsp">
+		<jsp:include page="menuAdmin.jsp">
 			<jsp:param value="a" name="a" />
 		</jsp:include>
 	</nav>
@@ -27,7 +27,7 @@
 		<div class="row">
 
 			<div class="col-md-3">
-				<jsp:include page="leftMenu.jsp">
+				<jsp:include page="leftMenuVendor.jsp">
 					<jsp:param value="a" name="a" />
 				</jsp:include>
 			</div>

@@ -40,30 +40,39 @@
 
 					<div class="col-md-12">
 						<fieldset>
-							<legend class="registrationLegend">Product</legend>
+							<legend class="registrationLegend">Login</legend>
 
 						</fieldset>
 
 
 						<form name="f" action="<c:url value='j_spring_security_check'/>"
 							method="POST">
+
+
+
+
 							<table>
 								<tr>
 									<td>Username:</td>
-									<td><input type='text' name='j_username' /></td>
+									<td><input type='text' name='j_username'
+										class="form-control" /></td>
 								</tr>
+								<tr></tr>
 								<tr>
 									<td>Password:</td>
-									<td><input type='password' name='j_password'></td>
+									<td><input type='password' name='j_password'
+										class="form-control"></td>
 								</tr>
 								<tr>
 									<td colspan="2">&nbsp;</td>
 								</tr>
 								<tr>
-									<td colspan='2'><input name="submit" type="submit">&nbsp;<input
-										name="reset" type="reset"></td>
+									<td colspan='2'><input name="submit" type="submit"
+										class="btn btn-primary">&nbsp;<input name="reset"
+										type="reset" class="btn btn-primary"></td>
 								</tr>
 							</table>
+
 						</form>
 
 

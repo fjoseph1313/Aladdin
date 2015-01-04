@@ -93,7 +93,7 @@ public class ProductController {
 		productDAO.beginTransaction();
 		productDAO.save(newProduct);
 		productDAO.commitTransaction();
-		return "redirect:/product";
+		return "redirect:/vendor/dashboard";
 	}
 
 	@RequestMapping(value = "/addCategory", method = RequestMethod.GET)
@@ -114,7 +114,7 @@ public class ProductController {
 		productCategoryDAO.beginTransaction();
 		productCategoryDAO.save(newCategory);
 		productCategoryDAO.commitTransaction();
-		return "redirect:/product";
+		return "redirect:/vendor/dashboard";
 	}
 
 	@RequestMapping("/getProduct")

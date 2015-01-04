@@ -9,9 +9,11 @@
  	<http auto-config="true" use-expressions="true">
 		 
 		<intercept-url pattern="/vendor/**" access="hasAnyRole('ROLE_ADMIN','ROLE_VENDOR')"/> 
+		<intercept-url pattern="/admin/**" access="hasAnyRole('ROLE_ADMIN')"/> 
 			<form-login login-page="/clogin" default-target-url="/list" 
 			authentication-failure-url="/clogin?error=true" 
 			authentication-success-handler-ref="myAuthenticationSuccessHandler" /> 
+			
 
 	</http>
 
@@ -23,7 +25,7 @@
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider>
 			<jdbc-user-service data-source-ref="dataSource"
-				users-by-username-query="select emailAddress, password, isActive from person where emailAddress=?"
+				users-by-username-query="select emailAddress, password, isActive from person where isactive=1 and emailAddress=?"
 				authorities-by-username-query="select us.emailAddress, ur.authority from person us, user_roles ur   
         where us.id = ur.person_id and us.emailAddress =?" />
 

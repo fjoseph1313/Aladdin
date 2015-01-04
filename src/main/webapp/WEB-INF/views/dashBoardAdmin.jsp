@@ -16,7 +16,7 @@
 
 	<!-- Navigation -->
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<jsp:include page="menu.jsp">
+		<jsp:include page="menuAdmin.jsp">
 			<jsp:param value="a" name="a" />
 		</jsp:include>
 	</nav>
@@ -27,32 +27,25 @@
 		<div class="row">
 
 			<div class="col-md-3">
-				<jsp:include page="leftMenu.jsp">
+				<jsp:include page="leftMenuAdmin.jsp">
 					<jsp:param value="a" name="a" />
 				</jsp:include>
 			</div>
 
 
 
-			<div class="col-md-9">
+			<div class="col-md-9" style="min-height:500px">
 
 				<div class="row carousel-holder">
 
 					<div class="col-md-12">
 						<fieldset>
-							<legend class="registrationLegend">Product</legend>
+							<legend class="registrationLegend">Admin DashBoard</legend>
 
 						</fieldset>
 
-      
+						Welcome Admin,Here you can admin related task.
 
-						Thanks Admin!!! For logout click here 
-						<c:url value="/j_spring_security_logout" var="logoutUrl" />
-<a href="${logoutUrl}">Log Out</a>
-
-||||
-<a href="<c:url value="/j_spring_security_logout" />"
-    class="btn btn-danger btn-mini pull-right">logout</a>
 
 
 					</div>

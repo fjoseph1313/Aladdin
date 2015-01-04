@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "/vendor", method = RequestMethod.GET)
 public class VendorDashBoardController {
 	
-	@RequestMapping(value = "dashboard", method = RequestMethod.GET)
+	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String adminLogin(Locale locale, Model model) {
 		
 		
