@@ -40,8 +40,8 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="url" value="jdbc:mysql://localhost/aladdin"></property>
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-		<property name="username" value="root"></property>
-		<property name="password" value="mysql"></property>
+		<property name="username" value="aladdin"></property>
+		<property name="password" value="aladdin"></property>
 	</bean>
 	
 	<!-- <bean id="daoFactory" class="aladdin.com.HibernateDAOFactory" ></bean> -->
