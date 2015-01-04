@@ -1,10 +1,16 @@
 package aladdin.com.controller;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -108,6 +114,49 @@ public class ProductController {
 		productCategoryDAO.save(newCategory);
 		productCategoryDAO.commitTransaction();
 		return "redirect:/product";
+	}
+
+	@RequestMapping("/getProduct")
+	public String getProductById(@RequestParam("id") String productId,
+			Model model) {
+
+		String imageinfo=null;
+		productDAO.beginTransaction();
+
+		Product resultProduct = productDAO.findProductByIdCustom(Long
+				.parseLong((productId)));
+		productDAO.commitTransaction();
+
+		System.out.println(resultProduct.getProductName());
+		try {
+			imageinfo = b64Converter(resultProduct.getProductImage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		model.addAttribute("imageInfo", imageinfo);
+		model.addAttribute("product", resultProduct);
+		
+		return "productDetails";
+	}
+
+	public String b64Converter(byte[] bytes) throws IOException {
+
+		BufferedImage bufferedImage = null;
+		try {
+			InputStream inputStream = new ByteArrayInputStream(bytes);
+			bufferedImage = ImageIO.read(inputStream);
+		} catch (IOException ex) {
+			System.out.println(ex.getMessage());
+		}
+
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(bufferedImage, "jpg", baos);
+		baos.flush();
+		byte[] imageInByteArray = baos.toByteArray();
+		baos.close();
+		return javax.xml.bind.DatatypeConverter
+				.printBase64Binary(imageInByteArray);
 	}
 
 	// @RequestMapping(value = "/add", method = RequestMethod.POST)
