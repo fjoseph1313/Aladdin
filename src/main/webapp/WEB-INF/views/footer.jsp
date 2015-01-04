@@ -27,10 +27,14 @@
 
 	jQuery(document).ready(function() {
 		// binds form submission and fields to the validation engine
-		jQuery("#registrationFormId").validationEngine({
+		jQuery("#customerRegistrationFormId").validationEngine({
 			autoHidePrompt : true
 		});
 
+		jQuery("#vendorRegistrationFormId").validationEngine({
+			autoHidePrompt : true
+		});
+		
 		jQuery("#addProductRegistrationForm").validationEngine({
 			autoHidePrompt : true
 		});
