@@ -21,6 +21,7 @@
 				<value>aladdin.com.model.Cart</value>
 				<value>aladdin.com.model.Payment</value>
 				<value>aladdin.com.model.TransactionHistory</value>
+				<value>aladdin.com.model.UserRoles</value>
 			</list>
 		</property>
 	</bean>
@@ -28,7 +29,7 @@
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="properties">
 			<props>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
 				<prop key="connection.pool.size">5</prop>
 				<prop key="hibernate.show_sql">true</prop>

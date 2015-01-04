@@ -1,5 +1,7 @@
 package aladdin.com.controller;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -7,10 +9,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import aladdin.com.MailMail;
 import aladdin.com.dao.CustomerDAO;
 import aladdin.com.dao.DAOFactory;
+import aladdin.com.dao.UserRolesDAO;
 import aladdin.com.dao.VendorDAO;
 import aladdin.com.model.Customer;
+import aladdin.com.model.UserRoles;
 import aladdin.com.model.Vendor;
 
 @Controller
@@ -20,6 +25,7 @@ public class RegistrationController {
 	private DAOFactory factory = DAOFactory.getFactory();
 	private CustomerDAO customerDAO = factory.getCustomerDAO();
 	private VendorDAO vendorDAO = factory.getVendorDAO();
+	private UserRolesDAO userRolesDAO = factory.getUserRolesDAO();
 
 	/*
 	 * 
@@ -36,12 +42,25 @@ public class RegistrationController {
 	public String createorUpdateCustomer(Model model,
 			@ModelAttribute("customer") Customer customer, BindingResult result) {
 		customer.setIsActive(true);
+
+		UserRoles userRoles = new UserRoles();
+		userRoles.setPerson(customer);
+		userRoles.setAuthority("USER_ROLE");
+		
 		customerDAO.beginTransaction();
 		customerDAO.save(customer);
 		customerDAO.commitTransaction();
+		
+		userRolesDAO.beginTransaction();
+		userRolesDAO.save(userRoles);
+		userRolesDAO.commitTransaction();
 
 		String fullName = customer.getFirstName() + " " + customer.getLastName();
 		model.addAttribute("fullName", fullName);
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Mail.xml");
+    	MailMail mm = (MailMail) context.getBean("mailMail");
+    	mm.sendMail("Aladdin E-Commerce <aladdin.mscs@gmail.com>", customer.getEmailAddress(), "aladdin.mscs@gmail.com", "Welcome Customer", "Welcome to Aladin.\n\n You have successfully registered to Aladin.");
 
 		return "registrationSuccess";
 	}
@@ -67,12 +86,25 @@ public class RegistrationController {
 	public String createorUpdateVendor(Model model,
 			@ModelAttribute("vendor") Vendor vendor, BindingResult result) {
 		vendor.setIsActive(false);
+		
+		UserRoles userRoles = new UserRoles();
+		userRoles.setPerson(vendor);
+		userRoles.setAuthority("VENDOR_ROLE");
+		
 		vendorDAO.beginTransaction();
 		vendorDAO.save(vendor);
 		vendorDAO.commitTransaction();
 
+		userRolesDAO.beginTransaction();
+		userRolesDAO.save(userRoles);
+		userRolesDAO.commitTransaction();
+		
 		String fullName = vendor.getFirstName() + " " + vendor.getLastName();
 		model.addAttribute("fullName", fullName);
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Mail.xml");
+    	MailMail mm = (MailMail) context.getBean("mailMail");
+    	mm.sendMail("Aladdin E-Commerce <aladdin.mscs@gmail.com>", vendor.getEmailAddress(), "aladdin.mscs@gmail.com", "Welcome Vendor", "Welcome to Aladin.\n\n You have successfully registered to Aladin.");
 
 		return "registrationSuccess";
 	}

@@ -30,13 +30,19 @@
 		jQuery("#registrationFormId").validationEngine({
 			autoHidePrompt : true
 		});
-		jQuery(document).ready(function() {
-			// binds form submission and fields to the validation engine
-			jQuery("#newProduct").validationEngine({
-				autoHidePrompt : true
-			});
-		
-		
+
+		jQuery("#addProductRegistrationForm").validationEngine({
+			autoHidePrompt : true
+		});
+
+		jQuery("#searchForm").validationEngine({
+			autoHidePrompt : true
+		});
+
+		jQuery("#addCategoryForm").validationEngine({
+			autoHidePrompt : true
+		});
+
 	});
 </script>
 

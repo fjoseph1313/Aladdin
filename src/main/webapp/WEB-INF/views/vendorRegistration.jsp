@@ -41,7 +41,7 @@
 						<fieldset>
 							<legend class="registrationLegend">Vendor Registration</legend>
 							<form:form class="form-horizontal registrationForm"
-								id="registrationFormId" action="./vendor-register/submit" method="post">
+								id="vendorRegistrationFormId" action="./vendor-register/submit" method="post">
 
 								<div class="form-group">
 									<label for="inputBusinessName" class="col-sm-2 control-label">Business

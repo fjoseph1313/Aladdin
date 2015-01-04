@@ -41,7 +41,7 @@
 						<fieldset>
 							<legend class="registrationLegend">Customer Registration</legend>
 							<form:form class="form-horizontal registrationForm"
-								id="registrationFormId" action="./customer-register/submit" method="post">
+								id="customerRegistrationFormId" action="./customer-register/submit" method="post">
 
 								<div class="form-group">
 									<label for="inputFirstName" class="col-sm-2 control-label">First

@@ -29,4 +29,5 @@ public abstract class DAOFactory
 	public abstract CartDAO getCartDAO();
 	public abstract TransactionHistoryDAO getTransactionHistoryDAO();
 	public abstract PaymentDAO getPaymentDAO();
+	public abstract UserRolesDAO getUserRolesDAO();
 }

@@ -13,4 +13,5 @@ public class HibernateDAOFactory extends DAOFactory
 	public  CartDAO getCartDAO(){ return new CartDAOImpl(); }
 	public  TransactionHistoryDAO getTransactionHistoryDAO(){ return new TransactionHistoryDAOImpl(); }
 	public  PaymentDAO getPaymentDAO(){ return new PaymentDAOImpl(); }
+	public  UserRolesDAO getUserRolesDAO(){ return new UserRolesDAOImpl(); }
 }

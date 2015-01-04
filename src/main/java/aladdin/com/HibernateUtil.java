@@ -1,10 +1,20 @@
 package aladdin.com;
 
-import org.hibernate.tool.hbm2ddl.SchemaExport;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import aladdin.com.model.*;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
+
+import aladdin.com.model.Cart;
+import aladdin.com.model.Customer;
+import aladdin.com.model.Order;
+import aladdin.com.model.Payment;
+import aladdin.com.model.Person;
+import aladdin.com.model.Product;
+import aladdin.com.model.ProductCategory;
+import aladdin.com.model.TransactionHistory;
+import aladdin.com.model.UserRoles;
+import aladdin.com.model.Vendor;
 
 public class HibernateUtil 
 {
@@ -23,6 +33,7 @@ public class HibernateUtil
 		config.addAnnotatedClass(Cart.class);
 		config.addAnnotatedClass(Payment.class);
 		config.addAnnotatedClass(TransactionHistory.class);
+		config.addAnnotatedClass(UserRoles.class);
 		config.configure();
 		
 		return config;
