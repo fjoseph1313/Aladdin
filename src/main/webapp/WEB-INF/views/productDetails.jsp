@@ -52,7 +52,7 @@
 						<p style="width:padding: 0px; margin: 5px 0 0 0;"><b>Description:</b></p><hr style="padding: 0px; margin: 0px 0 5px 0;border-color: black">
 						<p style="width:padding: 0px; margin: 0px;">${product.productDescription}</p>
 						<p style="width:padding: 0px; margin: 5px 0 0 0;"><b>Price:</b></p><hr style="padding: 0px; margin: 0px 0 5px 0;border-color: black">
-						<p style="width:padding: 0px; margin: 0px;">${product.price}</p>
+						<p style="width:padding: 0px; margin: 0px;">$${product.price}</p>
 					</div>
 
 				</div>
