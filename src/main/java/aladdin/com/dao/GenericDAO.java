@@ -9,6 +9,8 @@ interface GenericDAO<T, ID extends Serializable> {
 	T findByPrimaryKey(ID id);
 
 	List<T> findAll(int startIndex, int fetchSize);
+	
+	List<T> getAll();
 
 	List<T> findByExample(T exampleInstance, String[] excludeProperty);
 

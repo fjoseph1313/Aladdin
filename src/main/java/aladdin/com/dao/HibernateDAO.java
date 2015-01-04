@@ -44,6 +44,12 @@ public abstract class HibernateDAO< T , ID extends Serializable> implements Gene
 		return crit.list();
 	}
 	
+	public List<T> getAll()
+	{
+		Criteria crit = HibernateUtil.getSession().createCriteria(persistenceClass);
+		return crit.list();
+	}
+	
 	public T save(T entity)
 	{
 		HibernateUtil.getSession().saveOrUpdate(entity);

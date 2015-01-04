@@ -75,6 +75,7 @@ public class ProductController {
 		productCategoryDAO.beginTransaction();
 		List<ProductCategory> productcategoryList = productCategoryDAO.findAll(
 				0, 1000);
+		
 		productCategoryDAO.commitTransaction();
 		model.addAttribute("productcategoryList", productcategoryList);
 		return "addProduct";
