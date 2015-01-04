@@ -1,7 +1,5 @@
 package aladdin.com.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -28,7 +26,7 @@ public class AdminLoginController {
 	@Autowired
 	private ProductCategoryDAOImpl productCategoryDAO;
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = {"/login", "/"}, method = RequestMethod.GET)
 	public String adminLoginForm(Locale locale, Model model) {
 		//logger.info("Welcome home! The client locale is {}.", locale);
 		
