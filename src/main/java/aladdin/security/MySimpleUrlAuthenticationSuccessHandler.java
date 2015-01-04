@@ -46,19 +46,19 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
         boolean isAdmin = false;
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
-            if (grantedAuthority.getAuthority().equals("VENDOR_ROLE")) {
-            	isVendor = true;
-                break;
-            } else if (grantedAuthority.getAuthority().equals("ADMIN_ROLE")) {
+            if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
                 isAdmin = true;
+                break;
+            } else if (grantedAuthority.getAuthority().equals("ROLE_VENDOR")) {
+            	isVendor = true;
                 break;
             }
         }
  
-        if (isVendor) {
-            return "/vendor/dashboard";
-        } else if (isAdmin) {
+        if (isAdmin) {
             return "/admin/dashboard";
+        } else if (isVendor) {
+            return "/vendor/dashboard";
         } else {
             throw new IllegalStateException();
         }

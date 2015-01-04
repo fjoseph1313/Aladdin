@@ -45,7 +45,7 @@ public class RegistrationController {
 
 		UserRoles userRoles = new UserRoles();
 		userRoles.setPerson(customer);
-		userRoles.setAuthority("USER_ROLE");
+		userRoles.setAuthority("ROLE_USER");
 		
 		customerDAO.beginTransaction();
 		customerDAO.save(customer);
@@ -95,7 +95,7 @@ public class RegistrationController {
 		
 		UserRoles userRoles = new UserRoles();
 		userRoles.setPerson(vendor);
-		userRoles.setAuthority("VENDOR_ROLE");
+		userRoles.setAuthority("ROLE_VENDOR");
 		
 		vendorDAO.beginTransaction();
 		vendorDAO.save(vendor);

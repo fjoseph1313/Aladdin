@@ -21,7 +21,6 @@
 		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<beans:property name="converters">
 
-
 			<beans:set>
 
 				<beans:bean class="aladdin.com.converter.NameToProductCategoryConverter" />
@@ -45,11 +44,11 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
+	
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 
 		<!-- setting maximum upload size -->
-
 
 	</beans:bean>
 
