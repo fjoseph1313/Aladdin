@@ -2,6 +2,9 @@ package aladdin.com.controller;
 
 
 import java.util.Date;
+import java.util.List;
+
+import javassist.bytecode.Descriptor.Iterator;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,10 +36,9 @@ public class OrderController {
 			cart.setOrder(existingOrder);
 			existingOrder.getCart().add(cart); //just for bidirectional association.
 			cartDao.save(cart);
-			for(int i = 0; i < existingOrder.getCart().size(); i ++)
-			{
-				
-			}
+			
+			existingOrder.setOrderAmount(existingOrder.getOrderAmount() + (fetchedProduct.getPrice() * cart.getQuantity()));
+			existingOrder.setQuantity(existingOrder.getQuantity() + cart.getQuantity());
 			
 			orderDao.save(existingOrder); //persisting an updated order
 			orderDao.commitTransaction();
@@ -55,6 +57,7 @@ public class OrderController {
 			cart.setOrder(order);
 			cartDao.save(cart);
 			orderDao.save(order);
+			orderDao.commitTransaction();
 			
 			result = "viewOrder";
 		}
