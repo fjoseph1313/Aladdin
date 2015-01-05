@@ -1,30 +1,52 @@
 package aladdin.com.model;
 
 import javax.persistence.Entity;
-import javax.xml.bind.annotation.XmlRootElement;
+	
 
+@Entity
+public class Admin extends Person {
 
-@XmlRootElement
-@Entity(name = "admin")
-public class Admin {
+	private String businessName;
+	private float profitPercentage;
 	
-	private String userName;
-	private String password;
+	public Admin() {
+    }
 	
-	
-	public String getUserName() {
-		return userName;
+	public Admin(String f, String l, String p, String e, String pass)
+	{
+		super(f, l, p, e, pass);
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+
+	public String getBusinessName() {
+		return businessName;
 	}
-	public String getPassword() {
-		return password;
+
+	public float getProfitPercentage() {
+		return profitPercentage;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
 	}
-	
+
+	public void setProfitPercentage(float profitPercentage) {
+		this.profitPercentage = profitPercentage;
+	}
+
+	@Override
+	public String toString() {
+		return "Admin [businessName=" + businessName + ", profitPercentage="
+				+ profitPercentage + ", getFirstName()=" + getFirstName()
+				+ ", getLastName()=" + getLastName() + ", getDateOfBirth()="
+				+ getDateOfBirth() + ", getPhoneNumber()=" + getPhoneNumber()
+				+ ", getEmailAddress()=" + getEmailAddress()
+				+ ", getPassword()=" + getPassword() + ", getIsActive()="
+				+ getIsActive() + ", getAddress()=" + getAddress()
+				+ ", getId()=" + getId() + ", getConfirmPassword()="
+				+ getConfirmPassword() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
+	}
 	
 	
 

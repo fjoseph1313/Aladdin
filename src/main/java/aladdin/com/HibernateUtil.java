@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
+import aladdin.com.model.Admin;
 import aladdin.com.model.Cart;
 import aladdin.com.model.Customer;
 import aladdin.com.model.Order;
@@ -27,6 +28,7 @@ public class HibernateUtil
 		config.addAnnotatedClass(Person.class);
 		config.addAnnotatedClass(Customer.class);
 		config.addAnnotatedClass(Vendor.class);
+		config.addAnnotatedClass(Admin.class);
 		config.addAnnotatedClass(ProductCategory.class);
 		config.addAnnotatedClass(Product.class);
 		config.addAnnotatedClass(Order.class);
