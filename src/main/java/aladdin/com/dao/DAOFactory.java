@@ -20,6 +20,7 @@ public abstract class DAOFactory
 	}
 	
 	public abstract AddressDAO getAddressDAO();
+	public abstract AdminDAO getAdminDAO();
 	public abstract PersonDAO getPersonDAO();
 	public abstract VendorDAO getVendorDAO();
 	public abstract CustomerDAO getCustomerDAO();

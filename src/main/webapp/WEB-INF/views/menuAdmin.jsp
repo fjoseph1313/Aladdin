@@ -20,8 +20,16 @@
 		id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav">
 			<li><a href="<spring:url value="/" />">Home</a></li>
-			<c:url value="/j_spring_security_logout" var="logoutUrl" />
-			<li><a href="${logoutUrl}">Log Out</a></li>
+			
+			<c:choose>
+				<c:when test="${userDetails != null}">
+					<c:url value="/j_spring_security_logout" var="logoutUrl" />
+					<li><a href="${logoutUrl}">Log Out</a></li>
+				</c:when>
+				<c:otherwise>
+					<li><a href=" <spring:url value="/clogin" />">My Account </a></li>
+				</c:otherwise>
+			</c:choose>
 			
 		</ul>
 	</div>

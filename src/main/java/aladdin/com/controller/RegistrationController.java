@@ -2,6 +2,8 @@ package aladdin.com.controller;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,6 +48,13 @@ public class RegistrationController {
 		UserRoles userRoles = new UserRoles();
 		userRoles.setPerson(customer);
 		userRoles.setAuthority("ROLE_USER");
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+		
+		System.out.println("Encrypted Pass: "+passwordEncoder.encode(customer.getPassword()));
+
+		
 		
 		customerDAO.beginTransaction();
 		customerDAO.save(customer);
@@ -92,6 +101,13 @@ public class RegistrationController {
 	public String createorUpdateVendor(Model model,
 			@ModelAttribute("vendor") Vendor vendor, BindingResult result) {
 		vendor.setIsActive(false);
+		
+		
+		
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		vendor.setPassword(passwordEncoder.encode(vendor.getPassword()));
+		System.out.println("Encrypted Pass: "+passwordEncoder.encode(vendor.getPassword()));
 		
 		UserRoles userRoles = new UserRoles();
 		userRoles.setPerson(vendor);

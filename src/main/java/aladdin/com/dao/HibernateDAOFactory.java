@@ -4,6 +4,7 @@ public class HibernateDAOFactory extends DAOFactory
 {
 	
 	public AddressDAO getAddressDAO(){ return new AddressDAOImpl(); }
+	public AdminDAO getAdminDAO(){ return new AdminDAOImpl(); }
 	public  PersonDAO getPersonDAO(){ return new PersonDAOImpl(); }
 	public  VendorDAO getVendorDAO(){ return new VendorDAOImpl(); }
 	public  CustomerDAO getCustomerDAO(){ return new CustomerDAOImpl(); }

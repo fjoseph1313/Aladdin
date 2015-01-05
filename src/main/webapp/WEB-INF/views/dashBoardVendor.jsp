@@ -34,17 +34,21 @@
 
 
 
-			<div class="col-md-9" style="min-height:500px">
+			<div class="col-md-9" style="min-height: 500px">
 
 				<div class="row carousel-holder">
 
 					<div class="col-md-12">
 						<fieldset>
-							<legend class="registrationLegend">Product</legend>
+							<legend class="registrationLegend">								
+									Welcome
+									<c:out value="${userDetails.firstName}" />
+									!!!
+							</legend>
 
 						</fieldset>
 
-					Here vendor can do vendor related actions.
+						Here vendor can do vendor related actions.
 					</div>
 
 				</div>

@@ -3,10 +3,13 @@ package aladdin.com.dao;
 import java.util.List;
 
 
+
 import org.hibernate.Query;
 
 
+
 import aladdin.com.HibernateUtil;
+import aladdin.com.model.Admin;
 import aladdin.com.model.Vendor;
 
 public class VendorDAOImpl extends HibernateDAO<Vendor, Long> implements VendorDAO
@@ -29,4 +32,11 @@ public class VendorDAOImpl extends HibernateDAO<Vendor, Long> implements VendorD
 		HibernateUtil.getSession().save(vendor);
 		return true;
 	}
+	
+	public Vendor findVendorByEmail(String  email){
+		Query query = HibernateUtil.getSession().createQuery("from Vendor where emailAddress = :email");
+		query.setParameter("email", email);		
+		return (Vendor) query.list().get(0);	
+	}	
+	
 }
