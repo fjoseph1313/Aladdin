@@ -41,14 +41,16 @@
 						<fieldset>
 							<legend class="registrationLegend">Customer Registration</legend>
 							<form:form class="form-horizontal registrationForm"
-								id="customerRegistrationFormId" action="./customer-register/submit" method="post">
+								id="customerRegistrationFormId"
+								action="./customer-register/submit" method="post">
 
 								<div class="form-group">
 									<label for="inputFirstName" class="col-sm-2 control-label">First
 										Name</label>
 									<div class="col-sm-10">
 										<input type="text"
-											class="form-control validate[required] text-input" data-errormessage-value-missing="First Name is required!" 
+											class="form-control validate[required] text-input"
+											data-errormessage-value-missing="First Name is required!"
 											id="inputFirstName" placeholder="First Name"
 											style="width: 200px" name="firstName">
 									</div>
@@ -58,7 +60,10 @@
 									<label for="inputLastName" class="col-sm-2 control-label">Last
 										Name</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control validate[required] text-input" id="inputLastName" data-errormessage-value-missing="Last Name is required!"
+										<input type="text"
+											class="form-control validate[required] text-input"
+											id="inputLastName"
+											data-errormessage-value-missing="Last Name is required!"
 											placeholder="Last Name" style="width: 200px" name="lastName">
 									</div>
 								</div>
@@ -68,8 +73,11 @@
 										Of Birth</label>
 									<div class="col-sm-10">
 
-										<input type="text" id="datepicker" class="form-control validate[required] text-input"
-											style="width: 200px" name="dateOfBirth" placeholder="Date of Birth" data-errormessage-value-missing="Date of Birth is required!" >
+										<input type="text" id="datepicker"
+											class="form-control validate[required,funcCall[checkAge]] text-input datepicker"
+											style="width: 200px" name="dateOfBirth"
+											placeholder="Date of Birth"
+											data-errormessage-value-missing="Date of Birth is required!">
 									</div>
 								</div>
 
@@ -77,36 +85,50 @@
 									<label for="inputPhone" class="col-sm-2 control-label">Phone
 										Number</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control validate[required] text-input" id="inputPhone"
-											placeholder="Phone" style="width: 200px" name="phoneNumber" data-errormessage-value-missing="Phone Number is required!">
+										<input type="text"
+											class="form-control validate[required,funcCall[checkPhone]] text-input"
+											id="inputPhone" placeholder="Phone" style="width: 200px"
+											name="phoneNumber"
+											data-errormessage-value-missing="Phone Number is required!">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="inputEmail" class="col-sm-2 control-label">Email</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control validate[custom[email]] validate[required] text-input" id="inputEmail"
-											placeholder="Email" style="width: 200px" name="emailAddress" data-errormessage-value-missing="Email is required!">
+										<input type="text"
+											class="form-control validate[custom[email]] validate[required] text-input"
+											id="inputEmail" placeholder="Email" style="width: 200px"
+											name="emailAddress"
+											data-errormessage-value-missing="Email is required!">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="inputPassword" class="col-sm-2 control-label">Password</label>
 									<div class="col-sm-10">
-										<input type="password" class="form-control validate[required] text-input" id="inputPassword"
-											placeholder="Password" style="width: 200px" name="password" data-errormessage-value-missing="Password is required!">
+										<input type="password"
+											class="form-control validate[required] text-input"
+											id="inputPassword" placeholder="Password"
+											style="width: 200px" name="password"
+											data-errormessage-value-missing="Password is required!">
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="inputConfirmPassword" class="col-sm-2 control-label">Confirm Password</label>
+									<label for="inputConfirmPassword"
+										class="col-sm-2 control-label">Confirm Password</label>
 									<div class="col-sm-10">
-										<input type="password" class="form-control validate[required,equals[inputPassword]] text-input" id="inputConfirmPassword"
-											placeholder="Confirm Password" style="width: 200px" name="confirmPassword" data-errormessage-value-missing="Confirm Password is required!">
+										<input type="password"
+											class="form-control validate[required,equals[inputPassword]] text-input"
+											id="inputConfirmPassword" placeholder="Confirm Password"
+											style="width: 200px" name="confirmPassword"
+											data-errormessage-value-missing="Confirm Password is required!">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="countryList" class="col-sm-2 control-label"
 										style="margin-right: 14px;">Country</label> <select
-										class="form-control input-lg validate[required]" id="countryList"
-										style="width: 200px" name="address.country" data-errormessage-value-missing="Please select a country!">
+										class="form-control input-lg validate[required]"
+										id="countryList" style="width: 200px" name="address.country"
+										data-errormessage-value-missing="Please select a country!">
 										<option value="">Select a country</option>
 										<option value="AF">Afghanistan</option>
 										<option value="AL">Albania</option>
@@ -360,29 +382,40 @@
 								<div class="form-group">
 									<label for="inputState" class="col-sm-2 control-label">State</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control validate[required] text-input" id="inputState"
-											placeholder="State" style="width: 200px" name="address.state" data-errormessage-value-missing="State is required!">
+										<input type="text"
+											class="form-control validate[required] text-input"
+											id="inputState" placeholder="State" style="width: 200px"
+											name="address.state"
+											data-errormessage-value-missing="State is required!">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="inputCity" class="col-sm-2 control-label">City</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control validate[required] text-input" id="inputCity"
-											placeholder="City" style="width: 200px" name="address.city" data-errormessage-value-missing="City is required!">
+										<input type="text"
+											class="form-control validate[required] text-input"
+											id="inputCity" placeholder="City" style="width: 200px"
+											name="address.city"
+											data-errormessage-value-missing="City is required!">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="inputStreet" class="col-sm-2 control-label">Street</label>
 									<div class="col-sm-10">
-										<textarea class="form-control validate[required] text-input" id="inputStreet"
-											style="width: 200px" name="address.street" placeholder="Give Street Address" data-errormessage-value-missing="Street Adress is required!"></textarea>
+										<textarea class="form-control validate[required] text-input"
+											id="inputStreet" style="width: 200px" name="address.street"
+											placeholder="Give Street Address"
+											data-errormessage-value-missing="Street Adress is required!"></textarea>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="inputZip" class="col-sm-2 control-label">Zip</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control validate[required] text-input" id="inputZip"
-											placeholder="Zip Code" style="width: 200px" name="address.zip" data-errormessage-value-missing="Zip is required!">
+										<input type="text"
+											class="form-control validate[required,funcCall[checkZip]] text-input"
+											id="inputZip" placeholder="Zip Code" style="width: 200px"
+											name="address.zip"
+											data-errormessage-value-missing="Zip is required!">
 									</div>
 								</div>
 
