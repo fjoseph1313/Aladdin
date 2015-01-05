@@ -79,7 +79,7 @@
 										Of Birth</label>
 									<div class="col-sm-10">
 
-										<input type="text" id="datepicker" class="form-control validate[required] text-input"
+										<input type="text" id="datepicker" class="form-control validate[required,funcCall[checkAge]] text-input"
 											style="width: 200px" name="dateOfBirth" placeholder="Date of Birth" data-errormessage-value-missing="Date of Birth is required!" >
 									</div>
 								</div>
@@ -88,7 +88,7 @@
 									<label for="inputPhone" class="col-sm-2 control-label">Phone
 										Number</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control validate[required] text-input" id="inputPhone"
+										<input type="text" class="form-control validate[required,funcCall[checkPhone]] text-input" id="inputPhone"
 											placeholder="Phone" style="width: 200px" name="phoneNumber" data-errormessage-value-missing="Phone Number is required!">
 									</div>
 								</div>
@@ -399,7 +399,7 @@
 								<div class="form-group">
 									<label for="inputProfitPercentage" class="col-sm-2 control-label">Profit Percentage</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control validate[required] text-input" id="inputProfitPercentage"
+										<input type="text" class="form-control validate[required,funcCall[checkZip]] text-input" id="inputProfitPercentage"
 											placeholder="Profit Percentage" style="width: 200px" name="profitPercentage" data-errormessage-value-missing="Profit Percentage is required!">
 									</div>
 								</div>
