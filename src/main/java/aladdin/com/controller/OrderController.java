@@ -4,12 +4,17 @@ package aladdin.com.controller;
 import java.util.Date;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import aladdin.com.dao.*;
+import aladdin.com.dao.CartDAO;
+import aladdin.com.dao.CustomerDAO;
+import aladdin.com.dao.DAOFactory;
+import aladdin.com.dao.OrderDAO;
+import aladdin.com.dao.ProductDAO;
 import aladdin.com.model.Cart;
 import aladdin.com.model.Customer;
 import aladdin.com.model.Order;
@@ -25,7 +30,7 @@ public class OrderController {
 	CustomerDAO custDao = daoFactory.getCustomerDAO();
 	
 	@RequestMapping(value = "/order/{id}", method = RequestMethod.POST)
-	public String createOrder(@PathVariable Long id, @RequestParam("quantity") int qn )
+	public String createOrder(@PathVariable Long id, @RequestParam("quantity") int qn, Model model )
 	{
 		//get current logged in customer and create new order and find if its order still exists, else create new
 		Long custId = new Long(1);
@@ -56,6 +61,7 @@ public class OrderController {
 			existingOrder.setQuantity(existingOrder.getQuantity() + cart.getQuantity());
 			
 			orderDao.save(existingOrder); //persisting an updated order
+			model.addAttribute("currentOrder", existingOrder); //set this order into the session for checkout
 			orderDao.commitTransaction();
 			
 			result = "orderView";
@@ -80,6 +86,7 @@ public class OrderController {
 			
 			cartDao.save(cart);
 			orderDao.save(order);
+			model.addAttribute("currentOrder", order); //set this order into the session for checkout
 			orderDao.commitTransaction();
 			
 			result = "orderView";
@@ -88,5 +95,16 @@ public class OrderController {
 		
 		return result;
 	}
+	
+	@RequestMapping(value = "/payment/{id}", method = RequestMethod.GET)
+	public String preparePayment(@PathVariable("id") Long id, Model model)
+	{
+		orderDao.beginTransaction();
+		Order order = orderDao.findByPrimaryKey(id);
+		model.addAttribute(order);
+		return "cardDetails";
+	}
+	
+	
 
 }

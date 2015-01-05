@@ -18,7 +18,7 @@ public class Order {
 	private Date orderCreateDate;
 	@ManyToOne
 	private Customer customer; //maps to customer(one to many)
-	@OneToMany(mappedBy = "order", targetEntity = Cart.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "order", targetEntity = Cart.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Cart> cart;
 	
 	public Long getId() {

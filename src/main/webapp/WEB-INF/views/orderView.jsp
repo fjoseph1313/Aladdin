@@ -43,26 +43,41 @@
 
 					<div class="col-md-12">
 						<fieldset>
-							<legend class="registrationLegend"></legend>
-							<form:form class="form-horizontal registrationForm"
-								id="customerRegistrationFormId" action="./payment/${product.id}" method="post">
-
-								<div class="form-group">
-									<label for="inputQuantity" class="col-sm-3 control-label">Product Quantity: </label>
-									<div class="col-sm-9"><span>10</span></div>
-								</div>
-								<div class="form-group">
-									<label for="inputQuantity" class="col-sm-3 control-label">Order Amount: </label>
-									<div class="col-sm-9"><span>$100</span></div>
-								</div>
-
-								<div class="form-group">
-									<div class="col-sm-offset-1 col-sm-11">
-										<button type="submit" class="btn btn-primary signIn">Checkout</button>    <a href="<spring:url value="/" />">Continue Shopping</a> 
-									</div>
-								</div>
-							</form:form>
+							<b>Products</b>
 						</fieldset>
+						<form:form class="form-horizontal registrationForm"
+							id="customerRegistrationFormId"
+							action="./payment/${currentOrder.id}" method="post">
+							<table class="table  table-hover" style="margin-top: 10px">
+								<tr>
+									<th>Product Name</th>
+									<th>Product Quality</th>
+									<th>SubTotal</th>
+								</tr>
+								<c:forEach var="item" items="${currentOrder.cart}">
+									<tr>
+										<td>${item.product.productName}</td>
+										<td>${item.quantity}</td>
+										<td>$${item.quantity * item.product.price}</td>
+									</tr>
+								</c:forEach>
+
+							</table>
+							<div class="row">
+								<div class="col-md-6" style="text-align: right">
+									<b>Total Quantity : ${currentOrder.quantity }</b>
+								</div>
+								<div class="col-md-6" style="text-align: right">
+									<b>Total Order Amount:$${currentOrder.orderAmount }</b>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-1 col-sm-11">
+									<a href="<spring:url value="/payment/${currentOrder.id}" />">Checkout </a> |
+									<a href="<spring:url value="/" />"> Continue Shopping</a>
+								</div>
+							</div>
+						</form:form>
 					</div>
 
 				</div>
@@ -72,7 +87,7 @@
 
 	</div>
 
-	</div>
+
 	<!-- /.container -->
 
 	<jsp:include page="footer.jsp">
