@@ -15,8 +15,9 @@ public class OrderDAOImpl extends HibernateDAO<Order, Long> implements OrderDAO
 	
 	public Order findByCustomerIdAndStatus(Long custid)
 	{
-		Query query = HibernateUtil.getSession().createQuery("FROM Order O");
-		//query.setParameter("id", custid);
+		Query query = HibernateUtil.getSession()
+				.createQuery("FROM Order O WHERE O.orderStatus = 'new' and O.customer.id = :id");
+		query.setParameter("id", custid);
 		return (Order) query.uniqueResult();
 	}
 }
