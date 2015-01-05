@@ -12,6 +12,9 @@ body {
 ALL CUSTOM CSS STARTS HERE
 
 *********/
+
+.ui-datepicker-month,.ui-datepicker-year{background-color:black}
+
 .registrationForm .signIn {
 	margin: 13px 0 0 98px;
 	width: 103px;
@@ -36,7 +39,6 @@ ALL CUSTOM CSS STARTS HERE
 }
 
 #countryList {
-	
 	font-size: 14px;
 }
 

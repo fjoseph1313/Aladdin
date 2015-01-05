@@ -22,11 +22,81 @@
 	src="<c:url value="/resources/js/jquery.validationEngine-en.js" />"></script>
 <script>
 	$(function() {
-		$("#datepicker").datepicker();
+		$("#datepicker").datepicker({
+			dateFormat : 'yy-mm-dd',
+			changeMonth : true,
+			changeYear : true
+		});
+
 	});
+
+	/****CUSTOM VALIDATION
+	
+		USE IT LIKE 
+		
+		<input value="" class="validate[required,funcCall[checkHELLO]]" type="text" id="lastname" name="lastname" />
+	
+	 ****/
+	/* function checkHELLO(field, rules, i, options) {
+		if (field.val() != "HELLO") {
+			// this allows the use of i18 for the error msgs
+			return options.allrules.validate2fields.alertText;
+		}
+	} */
+
+	/****
+	function for zip
+	 ****/
+
+	function checkZip(field, rules, i, options) {
+
+		if (!(/^\d{5}([\-]?\d{4})?$/.test(field.val()))) {
+			// this allows the use of i18 for the error msgs
+			return "Please give a valid  zip";
+		}
+	}
+
+	/****
+	function for phone
+	 ****/
+
+	function checkPhone(field, rules, i, options) {
+
+		if (!(/^(\([2-9]|[2-9])(\d{2}|\d{2}\))(-|.|\s)?\d{3}(-|.|\s)?\d{4}$/
+				.test(field.val()))) {
+			// this allows the use of i18 for the error msgs
+			return "Please give a valid  Phonenumber";
+		}
+	}
+
+	/****
+	function for Age
+	 ****/
+
+	function checkAge(field, rules, i, options) {
+
+		//alert(field.val());
+
+		var dob = new Date(field.val());
+		//console.log(dob);
+
+		var today = new Date();
+		console.log(today);
+
+		//console.log(dob.getFullYear());
+
+		console.log((dob.getFullYear() - today.getFullYear()));
+
+		if ((today.getFullYear()-dob.getFullYear() ) < 18) {
+			// this allows the use of i18 for the error msgs
+			//alert("here");
+			return "Age should be 18 or more";
+		}
+	}
 
 	jQuery(document).ready(function() {
 		// binds form submission and fields to the validation engine
+
 		jQuery("#customerRegistrationFormId").validationEngine({
 			autoHidePrompt : true
 		});
@@ -34,7 +104,7 @@
 		jQuery("#vendorRegistrationFormId").validationEngine({
 			autoHidePrompt : true
 		});
-		
+
 		jQuery("#addProductRegistrationForm").validationEngine({
 			autoHidePrompt : true
 		});
