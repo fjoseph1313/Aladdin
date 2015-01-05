@@ -37,27 +37,8 @@
 
 			<div class="col-md-9">
 
-				<h3 style="margin-left: 16px">Product Deatils</h3>
-				<hr style="padding: 0px; margin: 0px;">
+				<h3 style="margin-left: 16px">Order Details</h3>
 
-				<div class="row" style="margin-top: 21px;">
-
-					<div class="col-md-6"
-						style="width: 210px; padding: 0px; margin: 0px 0 0 16px;">
-						<img src="data:image/jpg;base64,${imageInfo}" alt="" height="200"
-							width="200" class="img-thumbnail">
-					</div>
-
-					<div class="col-md-6" style="width: 100px;padding: 0px; margin: 0px 0 0 10px;">
-						<p style="width:padding: 0px; margin: 0px;"><b>Name:</b></p><hr style="padding: 0px; margin: 0px 0 5px 0;border-color: black">
-						<p style="width:padding: 0px; margin: 0px;">${product.productName}</p>
-						<p style="width:padding: 0px; margin: 5px 0 0 0;"><b>Description:</b></p><hr style="padding: 0px; margin: 0px 0 5px 0;border-color: black">
-						<p style="width:padding: 0px; margin: 0px;">${product.productDescription}</p>
-						<p style="width:padding: 0px; margin: 5px 0 0 0;"><b>Price:</b></p><hr style="padding: 0px; margin: 0px 0 5px 0;border-color: black">
-						<p style="width:padding: 0px; margin: 0px;">$${product.price}</p>
-					</div>
-
-				</div>
 				<div class="row carousel-holder">
 
 					<div class="col-md-12">

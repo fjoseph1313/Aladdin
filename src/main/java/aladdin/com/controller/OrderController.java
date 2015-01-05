@@ -2,17 +2,23 @@ package aladdin.com.controller;
 
 
 import java.util.Date;
-import java.util.List;
 
-import javassist.bytecode.Descriptor.Iterator;
-
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 
-import aladdin.com.dao.*;
-import aladdin.com.model.*;
+import aladdin.com.dao.CartDAO;
+import aladdin.com.dao.DAOFactory;
+import aladdin.com.dao.OrderDAO;
+import aladdin.com.dao.ProductDAO;
+import aladdin.com.model.Cart;
+import aladdin.com.model.Order;
+import aladdin.com.model.Product;
 
+@Controller
 public class OrderController {
 	
 	private DAOFactory daoFactory = DAOFactory.getFactory();
@@ -21,7 +27,7 @@ public class OrderController {
 	CartDAO cartDao = daoFactory.getCartDAO();
 	
 	@RequestMapping(value = "/order/{id}", method = RequestMethod.POST)
-	public String createOrder(@PathVariable Long id, Cart cart)
+	public String createOrder(@PathVariable Long id, @RequestParam("quantity") int qn )
 	{
 		//get current logged in customer and create new order and find if its order still exists, else create new
 		Long custId = new Long(1);
@@ -29,6 +35,7 @@ public class OrderController {
 		orderDao.beginTransaction();
 		Order existingOrder = orderDao.findByCustomerIdAndStatus(custId);
 		Product fetchedProduct = (Product) productDao.findByPrimaryKey(id);
+		Cart cart = new Cart(); //creating new cart
 		
 		if(existingOrder != null)
 		{
@@ -43,7 +50,7 @@ public class OrderController {
 			orderDao.save(existingOrder); //persisting an updated order
 			orderDao.commitTransaction();
 			
-			result = "viewOrder";
+			result = "orderView";
 		}
 		else{	
 			Order order = new Order();
@@ -59,7 +66,7 @@ public class OrderController {
 			orderDao.save(order);
 			orderDao.commitTransaction();
 			
-			result = "viewOrder";
+			result = "orderView";
 		}
 		
 		

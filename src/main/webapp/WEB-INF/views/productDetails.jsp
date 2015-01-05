@@ -36,7 +36,7 @@
 
 			<div class="col-md-9">
 
-				<h3 style="margin-left: 16px">Product Deatils</h3>
+				<h3 style="margin-left: 16px">Product Details</h3>
 				<hr style="padding: 0px; margin: 0px;">
 
 				<div class="row" style="margin-top: 21px;">
@@ -63,7 +63,7 @@
 						<fieldset>
 							<legend class="registrationLegend"></legend>
 							<form:form class="form-horizontal registrationForm"
-								id="customerRegistrationFormId" action="./order/${product.id}" method="post">
+								id="customerRegistrationFormId" action="../order/${product.id}" method="post">
 
 								<div class="form-group">
 									<label for="inputQuantity" class="col-sm-3 control-label">Product Quantity</label>
