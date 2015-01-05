@@ -4,6 +4,7 @@ package aladdin.com.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +23,7 @@ public class Person {
 	private String lastName;
 	private Date dateOfBirth;
 	private String phoneNumber;
+	@Column(unique=true)
 	private String emailAddress;
 	private String password;
 	@Transient
