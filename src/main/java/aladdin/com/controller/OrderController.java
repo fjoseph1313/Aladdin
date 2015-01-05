@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import aladdin.com.dao.*;
 import aladdin.com.model.*;
@@ -16,7 +17,7 @@ public class OrderController {
 	ProductDAO productDao = daoFactory.getProductDAO();
 	CartDAO cartDao = daoFactory.getCartDAO();
 	
-	@RequestMapping(value = "/order/{id}")
+	@RequestMapping(value = "/order/{id}", method = RequestMethod.POST)
 	public String createOrder(@PathVariable Long id, Cart cart)
 	{
 		//get current logged in customer and create new order and find if its order still exists, else create new
@@ -32,6 +33,11 @@ public class OrderController {
 			cart.setOrder(existingOrder);
 			existingOrder.getCart().add(cart); //just for bidirectional association.
 			cartDao.save(cart);
+			for(int i = 0; i < existingOrder.getCart().size(); i ++)
+			{
+				
+			}
+			
 			orderDao.save(existingOrder); //persisting an updated order
 			orderDao.commitTransaction();
 			
