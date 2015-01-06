@@ -1,8 +1,14 @@
 package aladdin.com.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -140,4 +146,27 @@ public class RegistrationController {
 		return "redirect:/login";
 	}
 
+	@RequestMapping(value = "/customer/successful", method = RequestMethod.GET)
+	public String redirectToProperPage(Model model,HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		
+		Object principal = SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		customerDAO.beginTransaction();
+		Customer customer = customerDAO.findCustomerByEmail(auth.getName());
+		HttpSession session = request.getSession(true); // create a new session		
+		session.setAttribute("userDetails", customer);
+		session.setAttribute("userType", customer.getClass().getSimpleName());
+		customerDAO.commitTransaction();
+		
+		String referer = request.getHeader("Referer");
+		System.out.println("referer: "+referer);
+		if(referer.equalsIgnoreCase("http://localhost:8080/Aladdin/clogin")){
+			return "redirect:/";
+		}
+
+		return "redirect:"+referer;
+	}
 }
