@@ -118,7 +118,7 @@ public class ProductController {
 		productCategoryDAO.beginTransaction();
 		productCategoryDAO.save(newCategory);
 		productCategoryDAO.commitTransaction();
-		return "redirect:/vendor/dashboard";
+		return "redirect:/admin/dashboard";
 	}
 
 	@RequestMapping("/getProduct")

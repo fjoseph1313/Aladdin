@@ -27,7 +27,7 @@
 		<div class="row">
 
 			<div class="col-md-3">
-				<jsp:include page="leftMenuVendor.jsp">
+				<jsp:include page="leftMenuAdmin.jsp">
 					<jsp:param value="a" name="a" />
 				</jsp:include>
 			</div>
