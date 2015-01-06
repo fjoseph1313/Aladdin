@@ -35,6 +35,7 @@ import aladdin.com.dao.ProductCategoryDAOImpl;
 import aladdin.com.dao.ProductDAOImpl;
 import aladdin.com.model.Product;
 import aladdin.com.model.ProductCategory;
+import aladdin.com.model.Vendor;
 
 /**
  * Handles requests for the application file upload requests
@@ -84,8 +85,11 @@ public class ProductController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String processAddNewProductForm(
 			@ModelAttribute("newProduct") Product newProduct,
-			BindingResult result) {
+			BindingResult result, HttpServletRequest  request) {
 
+		Vendor vendor = (Vendor) request.getSession().getAttribute("userDetails");
+		newProduct.setVendor(vendor);
+		
 		byte[] bytes = newProduct.byteConversion(newProduct
 				.getMultiPartToByte());
 		newProduct.setProductImage(bytes);
