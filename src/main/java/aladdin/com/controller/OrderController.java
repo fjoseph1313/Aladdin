@@ -87,6 +87,7 @@ public class OrderController {
 			cartDao.save(cart);
 			orderDao.save(order);
 			model.addAttribute("currentOrder", order); //set this order into the session for checkout
+			model.addAttribute("currentOrderNew", cart); //set this order into the session for checkout
 			orderDao.commitTransaction();
 			
 			result = "orderView";

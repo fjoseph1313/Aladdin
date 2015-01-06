@@ -54,14 +54,24 @@
 									<th>Product Quality</th>
 									<th>SubTotal</th>
 								</tr>
-								<c:forEach var="item" items="${currentOrder.cart}">
+								
+								<c:if test="${empty currentOrderNew}">
+									<c:forEach var="item" items="${currentOrder.cart}">
+										<tr>
+											<td>${item.product.productName}</td>
+											<td>${item.quantity}</td>
+											<td>$${item.quantity * item.product.price}</td>
+										</tr>
+									</c:forEach>
+								</c:if>
+								
+								<c:if test="${not empty currentOrderNew}">
 									<tr>
-										<td>${item.product.productName}</td>
-										<td>${item.quantity}</td>
-										<td>$${item.quantity * item.product.price}</td>
+										<td>${currentOrderNew.product.productName}</td>
+										<td>${currentOrderNew.quantity}</td>
+										<td>$${currentOrderNew.quantity * currentOrderNew.product.price}</td>
 									</tr>
-								</c:forEach>
-
+								</c:if>
 							</table>
 							<div class="row">
 								<div class="col-md-6" style="text-align: right">
