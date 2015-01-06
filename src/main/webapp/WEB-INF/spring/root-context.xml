@@ -15,6 +15,7 @@
 				<value>aladdin.com.model.Person</value>
 				<value>aladdin.com.model.Customer</value>
 				<value>aladdin.com.model.Vendor</value>
+				<value>aladdin.com.model.Admin</value>
 				<value>aladdin.com.model.ProductCategory</value>
 				<value>aladdin.com.model.Product</value>
 				<value>aladdin.com.model.Order</value>
