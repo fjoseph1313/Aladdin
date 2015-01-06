@@ -9,16 +9,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
 import aladdin.com.dao.CartDAO;
 import aladdin.com.dao.CustomerDAO;
 import aladdin.com.dao.DAOFactory;
 import aladdin.com.dao.OrderDAO;
+import aladdin.com.dao.PaymentDAO;
 import aladdin.com.dao.ProductDAO;
+import aladdin.com.dao.TransactionHistoryDAO;
 import aladdin.com.model.Cart;
 import aladdin.com.model.Customer;
 import aladdin.com.model.Order;
+import aladdin.com.model.Payment;
 import aladdin.com.model.Product;
+import aladdin.com.model.TransactionHistory;
 
 @Controller
 public class OrderController {
@@ -28,6 +33,8 @@ public class OrderController {
 	ProductDAO productDao = daoFactory.getProductDAO();
 	CartDAO cartDao = daoFactory.getCartDAO();
 	CustomerDAO custDao = daoFactory.getCustomerDAO();
+	TransactionHistoryDAO histDao = daoFactory.getTransactionHistoryDAO();
+	PaymentDAO payDao = daoFactory.getPaymentDAO();
 	
 	@RequestMapping(value = "/order/{id}", method = RequestMethod.POST)
 	public String createOrder(@PathVariable Long id, @RequestParam("quantity") int qn, Model model )
@@ -105,6 +112,54 @@ public class OrderController {
 		return "cardDetails";
 	}
 	
-	
+	@RequestMapping(value = "/payment", method = RequestMethod.POST)
+	public String makePayment(//@PathVariable Long id,
+			@RequestParam("cardNumber") String card,
+			@RequestParam("cvv") String cvv,
+			@RequestParam("expireDt") String ex_dt,
+			Model model)
+	{
+		System.out.println("this card is ++++++++++++++++++++++++++++++"+card);
+		String message = "";
+				
+		Long custId = new Long(1);
+		orderDao.beginTransaction();
+		Order orderToPay = orderDao.findByCustomerIdAndStatus(custId); // get this customer's order which is still new, ready to pay
+		//concatenate the input parameters
+		String paymentDetails = card+cvv+ex_dt+orderToPay.getOrderAmount(); System.out.println(paymentDetails);
+		
+		RestTemplate restTemp = new RestTemplate();
+		String url = "http://localhost:8080/Aladdin/paymentrest/{paymentDetails}";
+		String result = restTemp.getForObject(url, String.class);
+		
+		if(result.equalsIgnoreCase("false"))
+		{
+			//return to the card details form..
+			message = "Payment Rejected, Insufficient Amount..";
+			model.addAttribute("errormessage", message);
+			orderDao.commitTransaction();
+			return "cardDetails";
+		}
+		else
+		{
+			//card details are correct and payment has been triggered.
+			Payment newPayment = new Payment();
+			newPayment.setOrder(orderToPay);
+			newPayment.setPaymentAmount(orderToPay.getOrderAmount());
+			newPayment.setPaymentType("VisaCard/MasterCard");
+			payDao.save(newPayment); //persisting this payment.
+			
+			TransactionHistory history = new TransactionHistory();
+			history.setTransactionDate(new Date());
+			history.setPayment(newPayment);
+			histDao.save(history); //saving transaction history.
+			
+			message = "Payment has been done successfully!";
+			model.addAttribute("successmessage", message);
+			orderDao.commitTransaction();
+		}
+		
+		return "paymentComfirmation";
+	}
 
 }
