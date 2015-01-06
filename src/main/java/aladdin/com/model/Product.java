@@ -34,6 +34,19 @@ public class Product {
 	@OneToMany(mappedBy = "product", targetEntity = Cart.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Cart> cart; // cart as order_details
 
+	@ManyToOne
+	@JoinColumn
+	private Vendor vendor;
+	
+	
+	public Vendor getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
+	}
+
 	public Product() {
 
 	}

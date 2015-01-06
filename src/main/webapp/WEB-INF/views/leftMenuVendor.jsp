@@ -6,8 +6,7 @@
 <div class="list-group">
 	<a href=" <spring:url value="/vendor/dashboard" />" class="list-group-item">DashBoard</a> 
 	<a href=" <spring:url value="/product/add" />" class="list-group-item">Add Product </a> 
-		<a href=" <spring:url value="/product/addCategory" />"
-		class="list-group-item">Add Category </a>
+		
 
 </div>
 

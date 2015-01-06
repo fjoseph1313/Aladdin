@@ -41,7 +41,7 @@
 						<fieldset>
 							<legend class="registrationLegend">Vendor Registration</legend>
 							<form:form class="form-horizontal registrationForm"
-								id="vendorRegistrationFormId" action="../vendor-register/submit" method="post">
+								id="vendorRegistrationFormId" action="./vendor-register/submit" method="post">
 
 								<div class="form-group">
 									<label for="inputBusinessName" class="col-sm-2 control-label">Business
@@ -392,14 +392,14 @@
 								<div class="form-group">
 									<label for="inputZip" class="col-sm-2 control-label">Zip</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control validate[required] text-input" id="inputZip"
+										<input type="text" class="form-control validate[required,funcCall[checkZip]] text-input" id="inputZip"
 											placeholder="Zip Code" style="width: 200px" name="address.zip" data-errormessage-value-missing="Zip is required!">
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="inputProfitPercentage" class="col-sm-2 control-label">Profit Percentage</label>
 									<div class="col-sm-10">
-										<input type="text" class="form-control validate[required,funcCall[checkZip]] text-input" id="inputProfitPercentage"
+										<input type="text" class="form-control validate[required] text-input" id="inputProfitPercentage"
 											placeholder="Profit Percentage" style="width: 200px" name="profitPercentage" data-errormessage-value-missing="Profit Percentage is required!">
 									</div>
 								</div>

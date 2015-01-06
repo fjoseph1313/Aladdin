@@ -10,6 +10,9 @@
 
 		<intercept-url pattern="/vendor/**"
 			access="hasAnyRole('ROLE_ADMIN','ROLE_VENDOR')" />
+		<intercept-url pattern="/order/payment/**"
+			access="hasAnyRole('ROLE_USER')" />
+			
 		<intercept-url pattern="/admin/**" access="hasAnyRole('ROLE_ADMIN')" />
 		<form-login login-page="/clogin" default-target-url="/list"
 			authentication-failure-url="/clogin?error=true"
@@ -42,5 +45,5 @@
 	<beans:bean id="encoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
-	<debug />
+	<!-- debug /-->
 </beans:beans>

@@ -1,7 +1,9 @@
 package aladdin.com.dao;
 
 import java.util.List;
+
 import org.hibernate.Query;
+
 import aladdin.com.HibernateUtil;
 import aladdin.com.model.Customer;
 
@@ -24,4 +26,12 @@ public class CustomerDAOImpl extends HibernateDAO<Customer, Long> implements Cus
 		HibernateUtil.getSession().save(customer);
 		return true;
 	}
+	
+	public Customer findCustomerByEmail(String email){
+		Query query = HibernateUtil.getSession().createQuery("from Customer where emailAddress = :email ");
+		query.setParameter("email", email);
+		return (Customer) query.list().get(0);			
+	}
+	
+	
 }

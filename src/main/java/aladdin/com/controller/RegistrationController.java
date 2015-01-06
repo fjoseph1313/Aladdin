@@ -1,8 +1,14 @@
 package aladdin.com.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,13 +55,12 @@ public class RegistrationController {
 		userRoles.setPerson(customer);
 		userRoles.setAuthority("ROLE_USER");
 		
+		String notEncodedPassword = customer.getPassword();
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		customer.setPassword(passwordEncoder.encode(customer.getPassword()));
 		
 		System.out.println("Encrypted Pass: "+passwordEncoder.encode(customer.getPassword()));
 
-		
-		
 		customerDAO.beginTransaction();
 		customerDAO.save(customer);
 		customerDAO.commitTransaction();
@@ -71,7 +76,7 @@ public class RegistrationController {
 		String emailBody = "Welcome " + fullName + ",\n\n"
 				+ "You have successfully registered to Aladdin.\n\n"
 				+ "Your email: " + customer.getEmailAddress() + "\n\n"
-				+ "Your password: " + customer.getPassword();
+				+ "Your password: " + notEncodedPassword;
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Mail.xml");
     	MailMail mm = (MailMail) context.getBean("mailMail");
@@ -101,10 +106,8 @@ public class RegistrationController {
 	public String createorUpdateVendor(Model model,
 			@ModelAttribute("vendor") Vendor vendor, BindingResult result) {
 		vendor.setIsActive(false);
-		
-		
-		
-		
+
+		String notEncodedPassword = vendor.getPassword();
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		vendor.setPassword(passwordEncoder.encode(vendor.getPassword()));
 		System.out.println("Encrypted Pass: "+passwordEncoder.encode(vendor.getPassword()));
@@ -128,7 +131,7 @@ public class RegistrationController {
 		String emailBody = "Welcome " + fullName + ",\n\n"
 				+ "You have successfully registered to Aladdin.\n\n"
 				+ "Your email: " + vendor.getEmailAddress() + "\n\n"
-				+ "Your password: " + vendor.getPassword();
+				+ "Your password: " + notEncodedPassword;
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Mail.xml");
     	MailMail mm = (MailMail) context.getBean("mailMail");
@@ -143,4 +146,27 @@ public class RegistrationController {
 		return "redirect:/login";
 	}
 
+	@RequestMapping(value = "/customer/successful", method = RequestMethod.GET)
+	public String redirectToProperPage(Model model,HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		
+		Object principal = SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		customerDAO.beginTransaction();
+		Customer customer = customerDAO.findCustomerByEmail(auth.getName());
+		HttpSession session = request.getSession(true); // create a new session		
+		session.setAttribute("userDetails", customer);
+		session.setAttribute("userType", customer.getClass().getSimpleName());
+		customerDAO.commitTransaction();
+		
+		String referer = request.getHeader("Referer");
+		System.out.println("referer: "+referer);
+		if(referer.equalsIgnoreCase("http://localhost:8080/Aladdin/clogin")){
+			return "redirect:/";
+		}
+
+		return "redirect:"+referer;
+	}
 }

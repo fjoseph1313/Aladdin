@@ -72,7 +72,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements
 		} else if (isVendor) {
 			return "/vendor/dashboard";
 		} else if (isUser) {
-			return "/";
+			return "/customer/successful";
 		} else {
 			throw new IllegalStateException();
 		}

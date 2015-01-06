@@ -4,10 +4,13 @@
 
 <p class="lead">Admin Menu</p>
 <div class="list-group">
-	<a href=" <spring:url value="/vendor/" />" class="list-group-item">Pending
-		Approval Request </a> <a href=" 
-		<spring:url value="/customer/" />"
-		class="list-group-item">Deactivate Customer </a>
+
+	<a href=" <spring:url value="/admin/dashboard" />" class="list-group-item">DashBoard </a> <a href=" <spring:url value="/vendor/" />"
+		class="list-group-item">Pending Approval Request </a> <a
+		href=" 
+		<spring:url value="/user/" />" class="list-group-item">Deactivate
+		Customer </a> <a href=" <spring:url value="/product/addCategory" />"
+		class="list-group-item">Add Category </a>
 
 </div>
 

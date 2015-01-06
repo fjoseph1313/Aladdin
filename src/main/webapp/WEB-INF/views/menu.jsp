@@ -54,7 +54,7 @@
 			<c:choose>
 				<c:when test="${userDetails != null}">
 					<c:url value="/j_spring_security_logout" var="logoutUrl" />
-					<li>Hi, <a href="${logoutUrl}">Log Out</a></li>
+					<li><a href="${logoutUrl}">Log Out</a></li>
 				</c:when>
 				<c:otherwise>
 					<li><a href=" <spring:url value="/clogin" />">My Account </a></li>

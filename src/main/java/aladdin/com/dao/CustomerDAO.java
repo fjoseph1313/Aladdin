@@ -9,5 +9,6 @@ public interface CustomerDAO extends GenericDAO<Customer, Long>
 {
 	public List <Customer> getCustomerForDisable(Boolean flag);
 	public boolean editCustomer(Long id);
+	public Customer findCustomerByEmail(String email);
 	
 }
