@@ -23,7 +23,7 @@
 				<value>aladdin.com.model.Payment</value>
 				<value>aladdin.com.model.TransactionHistory</value>
 				<value>aladdin.com.model.UserRoles</value>
-				
+
 			</list>
 		</property>
 	</bean>
@@ -45,8 +45,8 @@
 		<property name="username" value="aladdin"></property>
 		<property name="password" value="aladdin"></property>
 	</bean>
-	
-	
+
+
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
@@ -54,13 +54,18 @@
 				<value>mymessages</value>
 			</list>
 		</property>
-	</bean>	
-	
+	</bean>
+
 	<!-- <bean id="daoFactory" class="aladdin.com.HibernateDAOFactory" ></bean> -->
-	
+
+
 	<bean id="productDAO" class="aladdin.com.dao.ProductDAOImpl">
 	</bean>
 	<bean id="productCategoryDAO" class="aladdin.com.dao.ProductCategoryDAOImpl">
+	</bean>
+	<bean id="cartDAO" class="aladdin.com.dao.CartDAOImpl">
+	</bean>
+	<bean id="vendorDAO" class="aladdin.com.dao.VendorDAOImpl">
 	</bean>
 	<context:annotation-config />
 	<context:component-scan base-package="aladdin.com" />
