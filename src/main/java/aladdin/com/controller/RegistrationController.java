@@ -40,6 +40,12 @@ public class RegistrationController {
 	 * Customer Part
 	 */
 
+	@RequestMapping(value = "/registration", method = RequestMethod.GET)
+	public String getRegistration(Model model) {
+		model.addAttribute("customer", new Customer());
+		return "registration";
+	}
+	
 	@RequestMapping(value = "/customer-register", method = RequestMethod.GET)
 	public String getCustomerRegistrationForm(Model model) {
 		model.addAttribute("customer", new Customer());
