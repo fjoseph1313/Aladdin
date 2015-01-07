@@ -15,7 +15,8 @@
 			
 		<intercept-url pattern="/admin/**" access="hasAnyRole('ROLE_ADMIN')" />
 		<form-login login-page="/clogin" default-target-url="/list"
-			authentication-failure-url="/clogin?error=true"
+			authentication-failure-url="/cloginfailed" 
+			
 			authentication-success-handler-ref="myAuthenticationSuccessHandler" />
 
 
@@ -23,7 +24,8 @@
 
 
 
-
+	<beans:bean id="customAuthenticationFailureHandler"
+		class="aladdin.security.CustomAuthenticationFailureHandler" />
 
 	<beans:bean id="myAuthenticationSuccessHandler"
 		class="aladdin.security.MySimpleUrlAuthenticationSuccessHandler" />
@@ -34,7 +36,7 @@
 		<authentication-provider>
 			<password-encoder ref="encoder" />
 			<jdbc-user-service data-source-ref="dataSource"
-				users-by-username-query="select emailAddress, password, isActive from person where isactive=1 and emailAddress=?"
+				users-by-username-query="select emailAddress, password, enable from person where emailAddress=?"
 				authorities-by-username-query="select us.emailAddress, ur.authority from person us, user_roles ur   
         where us.id = ur.person_id and us.emailAddress =?" />
 

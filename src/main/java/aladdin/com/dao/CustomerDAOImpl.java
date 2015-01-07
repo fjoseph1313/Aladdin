@@ -22,7 +22,7 @@ public class CustomerDAOImpl extends HibernateDAO<Customer, Long> implements Cus
 	
 	public boolean editCustomer(Long id){
 		Customer customer = (Customer) HibernateUtil.getSession().get(Customer.class, id);
-		customer.setIsActive(false);
+		customer.setEnable(false);
 		HibernateUtil.getSession().save(customer);
 		return true;
 	}

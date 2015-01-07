@@ -21,7 +21,7 @@ public class PersonDAOImpl extends HibernateDAO<Person, Long> implements PersonD
 	
 	public boolean  activatePerson(Long id,Boolean flag){
 		Person person = (Person) HibernateUtil.getSession().get(Person.class, id);
-		person.setIsActive(flag);
+		person.setEnable(flag);
 		HibernateUtil.getSession().save(person);
 		return true;
 	}
