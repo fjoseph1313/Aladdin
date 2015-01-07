@@ -9,7 +9,7 @@
 	<jsp:param value="a" name="a" />
 </jsp:include>
 
-<title>Aladdin - Registration</title>
+<title>Aladdin-User List</title>
 </head>
 
 <body>
@@ -40,7 +40,7 @@
 
 					<div class="col-md-12">
 						<fieldset>
-							<legend class="registrationLegend">Customer List</legend>
+							<legend class="registrationLegend">User List</legend>
 
 						</fieldset>
 						<table class="table table-striped">
@@ -55,16 +55,16 @@
 									<td>${person.firstName}</td>
 									<td>${person.lastName}</td>
 									<td>${person.emailAddress}</td>
-									<td><c:if test="${person.isActive eq false}">
+									<td><c:if test="${person.enable eq false}">
 											<a href="user/status/${person.id}&&true">Activate</a>
 
-										</c:if> <c:if test="${person.isActive eq true}">
+										</c:if> <c:if test="${person.enable eq true}">
 											<a href="user/status/${person.id}&&true"
 												style="pointer-events: none; cursor: default; color: Grey; text-decoration: none">Activate</a>
-										</c:if> <c:if test="${person.isActive eq false}">
+										</c:if> <c:if test="${person.enable eq false}">
 											<a href="user/status/${person.id}&&false"
 												style="pointer-events: none; cursor: default; color: Grey; text-decoration: none">DeActivate</a>
-										</c:if> <c:if test="${person.isActive eq true}">
+										</c:if> <c:if test="${person.enable eq true}">
 											<a href="user/status/${person.id}&&false">DeActivate</a>
 										</c:if></td>
 								</tr>

@@ -30,6 +30,7 @@ public class Person {
 	private String confirmPassword;
 	
 	private boolean enable;
+	
 	public boolean isEnable() {
 		return enable;
 	}

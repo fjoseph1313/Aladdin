@@ -14,7 +14,7 @@ public class PersonDAOImpl extends HibernateDAO<Person, Long> implements PersonD
 		super(Person.class);
 	}
 	public List <Person> getPerson(){
-		Query query = HibernateUtil.getSession().createQuery("from Person p order by p.isActive asc");
+		Query query = HibernateUtil.getSession().createQuery("from Person p where dtype <> Admin order by p.enable asc");
 		List<Person> list = query.list();
 		return list;	
 	}
