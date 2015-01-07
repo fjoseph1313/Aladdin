@@ -19,12 +19,12 @@ public class AdminVendorLogin {
 		return "cLogin";
 	}
 	
-	@RequestMapping(value = "/clogout", method = RequestMethod.GET)
+	@RequestMapping(value = "/cloginfailed", method = RequestMethod.GET)
 	public String adminVenLogout(Model model) {
 		
 		
-
-		return "clogout";
+		model.addAttribute("error", "true");
+		return "cLogin";
 	}
 
 

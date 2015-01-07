@@ -20,7 +20,7 @@ public class VendorDAOImpl extends HibernateDAO<Vendor, Long> implements VendorD
 	}
 	
 	public List <Vendor> getVendorForApproval(Boolean flag){
-		Query query = HibernateUtil.getSession().createQuery("from Vendor where isActive = :id ");
+		Query query = HibernateUtil.getSession().createQuery("from Vendor where enable = :id ");
 		query.setParameter("id", flag);
 		List<Vendor> list = query.list();
 		return list;	
@@ -28,7 +28,7 @@ public class VendorDAOImpl extends HibernateDAO<Vendor, Long> implements VendorD
 	
 	public boolean editVendor(Long id){
 		Vendor vendor = (Vendor) HibernateUtil.getSession().get(Vendor.class, id);
-		vendor.setIsActive(true);
+		vendor.setEnable(true);
 		HibernateUtil.getSession().save(vendor);
 		return true;
 	}

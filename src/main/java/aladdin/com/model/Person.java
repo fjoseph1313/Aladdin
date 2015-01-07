@@ -28,7 +28,16 @@ public class Person {
 	private String password;
 	@Transient
 	private String confirmPassword;
-	private Boolean isActive;
+	
+	private boolean enable;
+	public boolean isEnable() {
+		return enable;
+	}
+
+	public void setEnable(boolean enable) {
+		this.enable = enable;
+	}
+
 	@Embedded
 	private Address address;
 	
@@ -68,9 +77,6 @@ public class Person {
 		return password;
 	}
 
-	public Boolean getIsActive() {
-		return isActive;
-	}
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -96,9 +102,7 @@ public class Person {
 		this.password = password;
 	}
 
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
-	}
+
 	
 	public Address getAddress() {
 		return address;

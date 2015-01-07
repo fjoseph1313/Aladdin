@@ -66,6 +66,9 @@ public class MySimpleUrlAuthenticationSuccessHandler implements
 				break;
 			}
 		}
+		
+		
+		
 
 		if (isAdmin) {
 			return "/admin/dashboard";

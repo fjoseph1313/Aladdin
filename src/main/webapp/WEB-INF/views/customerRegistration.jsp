@@ -40,9 +40,10 @@
 					<div class="col-md-12">
 						<fieldset>
 							<legend class="registrationLegend">Customer Registration</legend>
+							<c:url var="addUrl" value="/customer-register/submit"/>
 							<form:form class="form-horizontal registrationForm"
 								id="customerRegistrationFormId"
-								action="./customer-register/submit" method="post">
+								action="${addUrl}" method="post">
 
 								<div class="form-group">
 									<label for="inputFirstName" class="col-sm-2 control-label">First

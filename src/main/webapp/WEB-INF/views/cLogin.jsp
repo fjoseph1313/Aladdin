@@ -1,6 +1,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ page language="java" import="javax.servlet.jsp.PageContext"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,10 +40,17 @@
 
 				<div class="row carousel-holder">
 
+
+					<c:if test="${not empty error}">
+						<div class="error">
+							Your login attempt was not successful, try again.<br /> Reason:
+							${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+						</div>
+					</c:if>
+
 					<div class="col-md-12">
 						<fieldset>
 							<legend class="registrationLegend">Login</legend>
-
 						</fieldset>
 
 

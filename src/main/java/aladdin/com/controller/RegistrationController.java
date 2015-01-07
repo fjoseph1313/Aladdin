@@ -49,7 +49,7 @@ public class RegistrationController {
 	@RequestMapping(value = "/customer-register/submit", method = RequestMethod.POST)
 	public String createorUpdateCustomer(Model model,
 			@ModelAttribute("customer") Customer customer, BindingResult result) {
-		customer.setIsActive(true);
+		customer.setEnable(true);
 
 		UserRoles userRoles = new UserRoles();
 		userRoles.setPerson(customer);
@@ -105,7 +105,7 @@ public class RegistrationController {
 	@RequestMapping(value = "/vendor-register/submit", method = RequestMethod.POST)
 	public String createorUpdateVendor(Model model,
 			@ModelAttribute("vendor") Vendor vendor, BindingResult result) {
-		vendor.setIsActive(false);
+		vendor.setEnable(false);
 
 		String notEncodedPassword = vendor.getPassword();
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
