@@ -25,16 +25,16 @@
 
 			<li><a href="#">Contact</a></li>
 
-			<li><a href="#" style="color: white;"><img
+			<li><a href="cart" style="color: white;"><img
 					src="<c:url value="/resources/images/shoppingCart.png" />"
-					class="cart_img" style="display: inline" /> (10)</a></li>
+					class="cart_img" style="display: inline" /> ${userCart.size()}</a></li>
 
 
 
 
-				
-			
-			
+
+
+
 			<c:choose>
 				<c:when test="${userType eq 'Admin'}">
 					<li><a href=" <spring:url value="/admin/dashboard" />">Go
@@ -66,7 +66,7 @@
 
 		</ul>
 
-		
+
 
 	</div>
 	<!-- /.navbar-collapse -->

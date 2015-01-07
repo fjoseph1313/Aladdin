@@ -37,6 +37,8 @@
 
 			<div class="col-md-9">
 
+				<!-- <div class="col-md-9">
+
 				<h3 style="margin-left: 16px">Order Details</h3>
 
 				<div class="row carousel-holder">
@@ -83,7 +85,67 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-1 col-sm-11">
-									<a href="<spring:url value="/payment/${currentOrder.id}" />">Checkout </a> |
+									<a href="<spring:url value="/order/cancel/${currentOrder.id}" />">Cancel Order </a> |
+									<a href="<spring:url value="/payment/${currentOrder.id}" />"> Checkout </a> |
+									<a href="<spring:url value="/" />"> Continue Shopping</a>
+								</div>
+							</div>
+						</form:form>
+					</div>
+
+				</div>
+			</div>-->
+
+
+
+				<h3 style="margin-left: 16px">Shopping Cart Details</h3>
+
+				<div class="row carousel-holder">
+
+					<div class="col-md-12">
+						<fieldset>
+							<b>Products</b>
+						</fieldset>
+						<form:form class="form-horizontal registrationForm"
+							id="customerRegistrationFormId"
+							action="./payment/${currentOrder.id}" method="post">
+							<table class="table  table-hover" style="margin-top: 10px">
+								<tr>
+									<th>Product Name</th>
+									<th>Product Quality</th>
+									<th>SubTotal</th>
+								</tr>
+								
+								<!--<c:if test="${empty currentOrderNew}">-->
+									<c:forEach var="item" items="${thisCart}">
+										<tr>
+											<td></td>
+											<td>${item.quantity}</td>
+											<td>$${item.quantity}</td>
+										</tr>
+									</c:forEach>
+								<!--</c:if>-->
+								
+								<!--<c:if test="${not empty currentOrderNew}">
+									<tr>
+										<td>${currentOrderNew.product.productName}</td>
+										<td>${currentOrderNew.quantity}</td>
+										<td>$${currentOrderNew.quantity * currentOrderNew.product.price}</td>
+									</tr>
+								</c:if>-->
+							</table>
+							<div class="row">
+								<div class="col-md-6" style="text-align: right">
+									<b>Total Quantity : ${currentOrder.quantity }</b>
+								</div>
+								<div class="col-md-6" style="text-align: right">
+									<b>Total Order Amount:$${currentOrder.orderAmount }</b>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-1 col-sm-11">
+									<a href="<spring:url value="/order/cancel/${currentOrder.id}" />">Cancel Order </a> |
+									<a href="<spring:url value="/payment/${currentOrder.id}" />"> Checkout </a> |
 									<a href="<spring:url value="/" />"> Continue Shopping</a>
 								</div>
 							</div>

@@ -17,7 +17,7 @@ public class ProductCategory {
 	private Long id;
 	private String categoryName;
 	private String categoryDescription;
-	@OneToMany(mappedBy = "productCategory", fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Product.class)
+	@OneToMany(mappedBy = "productCategory", fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = Product.class)
 	private List<Product> products;
 
 	public ProductCategory() {

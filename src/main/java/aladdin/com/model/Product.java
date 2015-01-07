@@ -2,12 +2,22 @@ package aladdin.com.model;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
@@ -31,7 +41,9 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name = "productCat")
 	private ProductCategory productCategory;
-	@OneToMany(mappedBy = "product", targetEntity = Cart.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	
+	@OneToMany(mappedBy = "product", targetEntity = Cart.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Cart> cart; // cart as order_details
 
 	@ManyToOne
@@ -170,4 +182,6 @@ public class Product {
 
 	}
 
+	
+	
 }
