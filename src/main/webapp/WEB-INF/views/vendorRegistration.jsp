@@ -40,8 +40,10 @@
 					<div class="col-md-12">
 						<fieldset>
 							<legend class="registrationLegend">Vendor Registration</legend>
+							<c:url var="addUrl" value="/vendor-register/submit"/>
 							<form:form class="form-horizontal registrationForm"
-								id="vendorRegistrationFormId" action="./vendor-register/submit" method="post">
+								id="vendorRegistrationFormId" 
+								action="${addUrl}" method="post">
 
 								<div class="form-group">
 									<label for="inputBusinessName" class="col-sm-2 control-label">Business

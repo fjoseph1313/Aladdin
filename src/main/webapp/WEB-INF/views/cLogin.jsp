@@ -38,6 +38,13 @@
 
 				<div class="row carousel-holder">
 
+
+					<c:if test="${not empty error}">
+						<div class="error">
+							Your login attempt was not successful, try again.<br /> Reason:
+							${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+						</div>
+					</c:if>
 					<div class="col-md-12">
 						<fieldset>
 							<legend class="registrationLegend">Login</legend>
@@ -79,6 +86,7 @@
 					</div>
 
 				</div>
+
 
 			</div>
 

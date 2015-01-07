@@ -60,6 +60,8 @@
 					<li><a href=" <spring:url value="/clogin" />">My Account </a></li>
 				</c:otherwise>
 			</c:choose>
+			
+			<li><a href=" <spring:url value="/registration" />" >Registration</a></li>
 
 
 

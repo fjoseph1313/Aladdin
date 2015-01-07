@@ -50,6 +50,9 @@
 
 						Welcome Admin,Here you can admin related task.
 
+						<p class="bg-success"
+							style="font-color: red; margin-top: 10px; ">${sucessmsg}
+						<p>
 					</div>
 
 				</div>

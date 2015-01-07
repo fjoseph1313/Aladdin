@@ -3,9 +3,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <p class="lead">Categories</p>
 <div class="list-group">
-	<a href="#" class="list-group-item">Category 1</a> <a href="#"
-		class="list-group-item">Category 2</a> <a href="#"
-		class="list-group-item">Category 3</a>
+	<c:forEach var="listValue" items="${productcategoryList}">
+		<a href="<c:url value="/product/showAll/${listValue.id}&&${listValue.categoryName}"/>"  class="list-group-item">${listValue}</a>
+	</c:forEach>
+
+
 </div>
 
 <div class="col-sm-12" id="searchProduct">

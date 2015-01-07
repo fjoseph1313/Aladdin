@@ -46,7 +46,7 @@
 							<div class="col-sm-4 col-lg-4 col-md-4">
 								<div class="thumbnail">
 									<img src="data:image/jpg;base64,${product.byteString}" alt=""
-										height="50" width="50">
+										style="height: 189px">
 									<div class="caption">
 										<h4 class="pull-right">$${product.price}</h4>
 										<h4>
@@ -59,16 +59,7 @@
 											class="glyphicon-info-sign glyphicon" /></span> Details
 										</a>
 									</div>
-									<div class="ratings">
-										<p class="pull-right">15 reviews</p>
-										<p>
-											<span class="glyphicon glyphicon-star"></span> <span
-												class="glyphicon glyphicon-star"></span> <span
-												class="glyphicon glyphicon-star"></span> <span
-												class="glyphicon glyphicon-star"></span> <span
-												class="glyphicon glyphicon-star"></span>
-										</p>
-									</div>
+									
 								</div>
 							</div>
 						</c:forEach>

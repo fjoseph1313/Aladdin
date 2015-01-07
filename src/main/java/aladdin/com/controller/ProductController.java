@@ -8,10 +8,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,11 +27,13 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import aladdin.com.dao.ProductCategoryDAOImpl;
 import aladdin.com.dao.ProductDAOImpl;
@@ -64,7 +68,7 @@ public class ProductController {
 				0, 1000);
 		model.addAttribute("productcategoryList", productcategoryList);
 		productCategoryDAO.commitTransaction();
-		
+
 		return "product";
 	}
 
@@ -77,7 +81,7 @@ public class ProductController {
 		productCategoryDAO.beginTransaction();
 		List<ProductCategory> productcategoryList = productCategoryDAO.findAll(
 				0, 1000);
-		
+
 		productCategoryDAO.commitTransaction();
 		model.addAttribute("productcategoryList", productcategoryList);
 		return "addProduct";
@@ -86,11 +90,13 @@ public class ProductController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String processAddNewProductForm(
 			@ModelAttribute("newProduct") Product newProduct,
-			BindingResult result, HttpServletRequest  request) {
+			BindingResult result, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
 
-		Vendor vendor = (Vendor) request.getSession().getAttribute("userDetails");
+		Vendor vendor = (Vendor) request.getSession().getAttribute(
+				"userDetails");
 		newProduct.setVendor(vendor);
-		
+
 		byte[] bytes = newProduct.byteConversion(newProduct
 				.getMultiPartToByte());
 		newProduct.setProductImage(bytes);
@@ -98,6 +104,8 @@ public class ProductController {
 		productDAO.beginTransaction();
 		productDAO.save(newProduct);
 		productDAO.commitTransaction();
+		redirectAttributes.addFlashAttribute("sucessmsg",
+				"Product Sucessfully uploaded");
 		return "redirect:/vendor/dashboard";
 	}
 
@@ -114,11 +122,13 @@ public class ProductController {
 	@RequestMapping(value = "/addCategory", method = RequestMethod.POST)
 	public String ProcessAddCategoryFrom(
 			@ModelAttribute("newCategory") ProductCategory newCategory,
-			BindingResult result) {
+			BindingResult result, RedirectAttributes redirectAttributes) {
 
 		productCategoryDAO.beginTransaction();
 		productCategoryDAO.save(newCategory);
 		productCategoryDAO.commitTransaction();
+		redirectAttributes.addFlashAttribute("sucessmsg",
+				"category Sucessfully uploaded");
 		return "redirect:/admin/dashboard";
 	}
 
@@ -126,7 +136,7 @@ public class ProductController {
 	public String getProductById(@RequestParam("id") String productId,
 			Model model) {
 
-		String imageinfo=null;
+		String imageinfo = null;
 		productDAO.beginTransaction();
 
 		Product resultProduct = productDAO.findProductByIdCustom(Long
@@ -142,8 +152,40 @@ public class ProductController {
 		}
 		model.addAttribute("imageInfo", imageinfo);
 		model.addAttribute("product", resultProduct);
-		
+
 		return "productDetails";
+	}
+
+	@RequestMapping(value = "/showAll/{id}&&{categoryName}", method = RequestMethod.GET)
+	public String showAllProducts(Model model, @PathVariable String id,
+			@PathVariable String categoryName) {
+
+		// ProductCategory newCategory = new ProductCategory();
+		//
+		// model.addAttribute("newCategory", newCategory);
+
+		// System.out.println(id);
+		List<Product> products = new ArrayList<Product>();
+		productDAO.beginTransaction();
+		List<Product> results = productDAO
+				.findAllProductsByProductCategoryId(Long.parseLong(id));
+
+		productDAO.commitTransaction();
+
+		for (Product p : results) {
+			try {
+				p.setByteString(b64Converter(p.getProductImage()));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			products.add(p);
+		}
+
+		model.addAttribute("productList", products);
+		model.addAttribute("categoryName", categoryName);
+
+		return "showAllProduct";
 	}
 
 	public String b64Converter(byte[] bytes) throws IOException {

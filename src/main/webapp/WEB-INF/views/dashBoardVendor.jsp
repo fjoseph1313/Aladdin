@@ -49,6 +49,8 @@
 						</fieldset>
 
 						Here vendor can do vendor related actions.
+						<p class="bg-success"
+							style="font-color: red; margin-top: 10px; ">${sucessmsg}<p>
 					</div>
 
 				</div>

@@ -8,8 +8,7 @@
 	<a href=" <spring:url value="/admin/dashboard" />" class="list-group-item">DashBoard </a> <a href=" <spring:url value="/vendor/" />"
 		class="list-group-item">Pending Approval Request </a> <a
 		href=" 
-		<spring:url value="/user/" />" class="list-group-item">Deactivate
-		Customer </a> <a href=" <spring:url value="/product/addCategory" />"
+		<spring:url value="/user/" />" class="list-group-item">Manage Users </a> <a href=" <spring:url value="/product/addCategory" />"
 		class="list-group-item">Add Category </a>
 
 </div>
