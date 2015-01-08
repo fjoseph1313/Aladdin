@@ -156,6 +156,7 @@ public class OrderController {
 		HttpSession session = request.getSession();
 		List<Cart> currentCart = (List<Cart>) session.getAttribute("userCart");
 		Customer loggedInCustomer = (Customer) session.getAttribute("userDetail");
+		System.out.println("User logged in is ////////////////////////////////"+loggedInCustomer.getFirstName());
 		
 		//Product quantity stock management
 		//List<Cart> currentCart = this.updateProductQuantity(currCart);
