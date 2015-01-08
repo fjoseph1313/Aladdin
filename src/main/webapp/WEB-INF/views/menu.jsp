@@ -61,10 +61,10 @@
 			<li><a
 				href="
 						<c:if test = "${empty userCart }">
-							<c:out value = '#' />
+							<c:url value = '#' />
 						</c:if>
 						<c:if test = "${not empty userCart }">
-							<c:out value = 'cart' />
+							<c:url value = '/cart' />
 						</c:if>
 						"
 				style="color: white;"><img
