@@ -155,6 +155,7 @@ public class OrderController {
 		String message = "";
 		HttpSession session = request.getSession();
 		List<Cart> currentCart = (List<Cart>) session.getAttribute("userCart");
+		Customer loggedInCustomer = (Customer) session.getAttribute("userDetail");
 		
 		//Product quantity stock management
 		//List<Cart> currentCart = this.updateProductQuantity(currCart);
@@ -200,7 +201,7 @@ public class OrderController {
 			order.setOrderStatus("completed");
 			order.setQuantity(ordQuant);
 			order.setOrderAmount(amt);
-			//order.setCustomer(userDetail);
+			order.setCustomer(loggedInCustomer);
 			orderDao.save(order); //saving the current order since payment has been done...
 			
 			//card details are correct and payment has been triggered.
