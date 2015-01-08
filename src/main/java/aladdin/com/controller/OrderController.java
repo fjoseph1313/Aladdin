@@ -128,53 +128,63 @@ public class OrderController {
 		HttpSession session = request.getSession();
 		List<Cart> currentCart = (List<Cart>) session.getAttribute("userCart");
 		System.out.println("values in existing cart ............"+currentCart);
+		String result = "index";
+		cartDao.beginTransaction();
+		Product fetchedProduct = (Product) productDao.findByPrimaryKey(id);
 		
-		if(currentCart == null)
+		//before adding to cart check if the products has enough quantities
+		if(qn > fetchedProduct.getProductQuantity())
 		{
-			ArrayList<Cart> newCart = new ArrayList<Cart>();
-			cartDao.beginTransaction();
-			Product fetchedProduct = (Product) productDao.findByPrimaryKey(id);
-			System.out.println(fetchedProduct.getProductName());
+			//return to productdetails page
+			String forQuantity = "We dont have sufficient, choose less than "+fetchedProduct.getProductQuantity();
+			model.addAttribute("lessQuantity", forQuantity);
+			model.addAttribute("product", fetchedProduct);
 			
-			//**************************
-			/*ArrayList inside = new ArrayList();
-			inside.add(fetchedProduct);
-			inside.add(qn);*/
-			//**************************
-			Cart cart = new Cart();
-			cart.setProduct(fetchedProduct);
-			//cart.setOrder(order); // we dont need order before user has logged in
-			cart.setQuantity(qn);
-			cartDao.save(cart); //persisting a cart item(product, quantity) in the database
-			newCart.add(cart); //add this item into cart.
-			
-			//put the modified list into the session
-			session.setAttribute("userCart", newCart);
-			cartDao.commitTransaction();
-			
-			System.out.println("Cart value ================================"+newCart.size());
-			System.out.println(fetchedProduct.getProductName());
-			//System.out.println("Cart value item================================"+(newCart.get(0)).getProduct().getProductName());
+			cartDao.commitTransaction(); // before any return, commit hibernate sessions.
+			result = "productDetails";
 		}
-		else{
-			cartDao.beginTransaction();
-			Product fetchedProduct = (Product) productDao.findByPrimaryKey(id);
-			Cart cart = new Cart();
-			cart.setProduct(fetchedProduct);
-			//cart.setOrder(order); // we dont need order before user has logged in
-			cart.setQuantity(qn);
-			cartDao.save(cart);
-			currentCart.add(cart); //add this item into cart.
-			//put the modified list into the session
-			session.setAttribute("userCart", currentCart);
-			cartDao.commitTransaction();
-			
-			System.out.println("Existing Cart value ============================"+currentCart.size());
-			//System.out.println("Cart value item================================"+(currentCart.get(1)).getProduct().getProductName());
+		else
+		{
+		
+			if(currentCart == null)
+			{
+				ArrayList<Cart> newCart = new ArrayList<Cart>();
+				
+				System.out.println(fetchedProduct.getProductName());
+				
+				Cart cart = new Cart();
+				cart.setProduct(fetchedProduct);
+				fetchedProduct.getCart().add(cart);
+				//cart.setOrder(order); // we dont need order before user has logged in
+				cart.setQuantity(qn);
+				newCart.add(cart); //add this item into cart.
+				
+				//put the modified list into the session
+				session.setAttribute("userCart", newCart);
+				cartDao.commitTransaction();
+				
+				System.out.println("Cart value ================================"+newCart.size());
+				System.out.println(fetchedProduct.getProductName());
+				//System.out.println("Cart value item================================"+(newCart.get(0)).getProduct().getProductName());
+			}
+			else{
+				Cart cart = new Cart();
+				cart.setProduct(fetchedProduct);
+				//cart.setOrder(order); // we dont need order before user has logged in
+				cart.setQuantity(qn);
+				fetchedProduct.getCart().add(cart);
+				currentCart.add(cart); //add this item into cart.
+				//put the modified list into the session
+				session.setAttribute("userCart", currentCart);
+				cartDao.commitTransaction();
+				
+				System.out.println("Existing Cart value ============================"+currentCart.size());
+				//System.out.println("Cart value item================================"+(currentCart.get(1)).getProduct().getProductName());
+			}
+		
 		}
 		
-		
-		return "index";
+		return result;
 	}
 	
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
@@ -182,15 +192,24 @@ public class OrderController {
 	{
 		HttpSession session = request.getSession();
 		List<Cart> currentCart = (List<Cart>) session.getAttribute("userCart");
+		//send total quantity and total amount to be paid
+		double amt = 0; int qua = 0;
+		for(int i = 0; i < currentCart.size(); i ++)
+		{
+			qua += currentCart.get(i).getQuantity();
+			amt += currentCart.get(i).getQuantity() * currentCart.get(i).getProduct().getPrice();
+		}
+		model.addAttribute("orderQuantity", qua);
+		model.addAttribute("orderAmount", amt);
 		model.addAttribute("thisCart", currentCart); //this is the list of cart items.
 		
-		//System.out.println("first item is ============"+((Cart)currentCart.get(0)).getProduct().getProductName());
+		System.out.println("first item is ============"+((Cart)currentCart.get(0)).getProduct().getProductName());
 		//System.out.println("Second item is ============"+((Cart)currentCart.get(1)).getProduct().getProductQuantity());
 		return "orderView";
 	}
 	
 	
-	@RequestMapping(value = "/payment/{id}", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/payment/{id}", method = RequestMethod.GET)
 	public String preparePayment(@PathVariable("id") Long id, Model model)
 	{
 		orderDao.beginTransaction();
@@ -198,9 +217,14 @@ public class OrderController {
 		model.addAttribute(order);
 		orderDao.commitTransaction();
 		return "cardDetails";
+	}*/
+	@RequestMapping(value = "/payment", method = RequestMethod.GET)
+	public String preparePayment(Model model)
+	{
+		return "cardDetails";
 	}
 	
-	@RequestMapping(value = "/payment", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/payment", method = RequestMethod.POST)
 	public String makePayment(//@PathVariable Long id,
 			@RequestParam("cardNumber") String card,
 			@RequestParam("cvv") String cvv,
@@ -251,9 +275,115 @@ public class OrderController {
 		}
 		
 		return "paymentComfirmation";
+	}*/
+	
+	@RequestMapping(value = "/payment", method = RequestMethod.POST)
+	public String makePayment(/*@PathVariable Long id,*/ HttpServletRequest request,
+			@RequestParam("cardNumber") String card,
+			@RequestParam("cvv") String cvv,
+			@RequestParam("expireDt") String ex_dt,
+			Model model)
+	{
+		orderDao.beginTransaction(); //remember to close this session before method termination
+		System.out.println("this card is ++++++++++++++++++++++++++++++"+card);
+		String message = "";
+		HttpSession session = request.getSession();
+		List<Cart> currentCart = (List<Cart>) session.getAttribute("userCart");
+		
+		//Product quantity stock management
+		//List<Cart> currentCart = this.updateProductQuantity(currCart);
+		
+		//profit percentage computation
+		int ordQuant = 0; double amt = 0; double vendorProf = 0; double myCompanyProf = 0;
+
+		for(int i = 0; i < currentCart.size(); i ++)
+		{
+			ordQuant += currentCart.get(i).getQuantity();
+			amt += currentCart.get(i).getQuantity() * currentCart.get(i).getProduct().getPrice();
+			
+			//for every product, calculate profit
+			double totalProf =  (currentCart.get(i).getProduct().getPrice() 
+					- (currentCart.get(i).getProduct().getPrice() * 0.8)) * currentCart.get(i).getQuantity();
+			System.out.println("total profit for item "+currentCart.get(i).getQuantity()+ " ==== "+totalProf);
+			double myCompPr = ( currentCart.get(i).getProduct().getVendor().getProfitPercentage() / 100 )
+					* totalProf;
+			vendorProf += myCompPr;
+			myCompanyProf += (totalProf - myCompPr);
+		}
+		
+		//concatenate the input parameters
+		String paymentDetails = card+cvv+ex_dt+amt; System.out.println("Path Variable +++++++++"+paymentDetails);
+		
+		//Consuming restful webservice....
+		RestTemplate restTemp = new RestTemplate();
+		String url = "http://localhost:8080/springhibernate/validate/"+paymentDetails;
+		String result = restTemp.getForObject(url, String.class);
+		
+		if(result.equalsIgnoreCase("false"))
+		{
+			//return to the card details form..
+			message = "Payment Rejected, Either Information provided was wrong or you have Insufficient Amount..";
+			model.addAttribute("errormessage", message);
+			orderDao.commitTransaction();
+			return "cardDetails";
+		}
+		else
+		{
+			//now create order and populate it with the cart.
+			Order order = new Order();
+			order.setCart(currentCart); //a cart must exist in the session to be persisted..
+			order.setOrderCreateDate(new Date());
+			order.setOrderStatus("completed");
+			order.setQuantity(ordQuant);
+			order.setOrderAmount(amt);
+			//order.setCustomer(userDetail);
+			orderDao.save(order); //saving the current order since payment has been done...
+			
+			//card details are correct and payment has been triggered.
+			Payment newPayment = new Payment();
+			newPayment.setOrder(order);
+			newPayment.setPaymentAmount(order.getOrderAmount());
+			newPayment.setPaymentType("VisaCard/MasterCard");
+			payDao.save(newPayment); //persisting this payment.
+			
+			//change order status 
+			//order.setOrderStatus("closed");
+			
+			/*Calculation on profit and store it on the transaction table...
+			traversing on all products on the order and calculate the profit
+			this could be done above! Should persist carts from this order*/
+			for(int j = 0; j < currentCart.size(); j ++)
+			{
+				Cart cart = new Cart();
+				cart.setProduct(currentCart.get(j).getProduct());
+				cart.setQuantity(currentCart.get(j).getQuantity());
+				cart.setOrder(order);
+				cartDao.save(cart);
+				
+			}
+			
+			TransactionHistory history = new TransactionHistory();
+			history.setTransactionDate(new Date());
+			history.setPayment(newPayment);
+			history.setVendorProfit(vendorProf);
+			history.setMyCompanyProfit(myCompanyProf);
+			histDao.save(history); //saving transaction history.
+			
+			message = "Payment has been done successfully!";
+			model.addAttribute("successmessage", message);
+			model.addAttribute("paidOrder", order);
+			orderDao.commitTransaction();
+			
+			//resert cart to null
+			currentCart = null;
+			session.setAttribute("userCart", currentCart);
+		}
+		
+		
+		return "paymentComfirmation";
 	}
 	
-	@RequestMapping(value = "/order/cancel/{id}", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/order/cancel/{id}", method = RequestMethod.GET)
 	public String cancelOrder(@PathVariable Long id, Model model)
 	{
 		orderDao.beginTransaction();
@@ -272,6 +402,38 @@ public class OrderController {
 		orderDao.delete(order);
 		orderDao.commitTransaction();
 		return "index"; //cancelled order.. return to index and start new shopping
-	}
+	}*/
 
+	@RequestMapping(value = "/order/cancel", method = RequestMethod.GET)
+	public String cancelOrder(HttpServletRequest request, Model model)
+	{
+		HttpSession session = request.getSession();
+		List<Cart> currentCart = (List<Cart>) session.getAttribute("userCart");
+		currentCart = null;
+		session.setAttribute("userCart", currentCart);
+		
+		return "index";
+	}
+	
+	public List<Cart> updateProductQuantity(List<Cart> cartList)
+	{
+		for(int k = 0; k < cartList.size(); k ++)
+		{
+			Product prod = cartList.get(k).getProduct();
+			if(cartList.get(k).getQuantity() > prod.getProductQuantity())
+			{
+				//return false; //insteady of returning false, update the current quantity to this
+				cartList.get(k).setQuantity(prod.getProductQuantity());
+				prod.setProductQuantity(0); //if we purchased all then new stock quantity is zero
+				productDao.save(prod);
+			}
+			else
+			{
+				prod.setProductQuantity(prod.getProductQuantity() - cartList.get(k).getQuantity());
+				productDao.save(prod);
+			}
+		}
+		
+		return cartList;
+	}
 }
