@@ -43,7 +43,7 @@
 							<legend class="registrationLegend">Payment Information</legend>
 							<p><font color = "red">${errormessage} </font>
 							<form:form class="form-horizontal"  
-								action = "../payment" method = "post">
+								action = "payment" method = "post">
 								<div class="col-lg-10">
 									<div class="form-group">
 										<label for="inputCard" class="col-sm-2 control-label">Card Number :</label>
