@@ -150,14 +150,17 @@ public class OrderController {
 			@RequestParam("expireDt") String ex_dt,
 			Model model)
 	{
-		orderDao.beginTransaction(); //remember to close this session before method termination
+		
 		System.out.println("this card is ++++++++++++++++++++++++++++++"+card);
 		String message = "";
 		HttpSession session = request.getSession();
-		List<Cart> currentCart = (List<Cart>) session.getAttribute("userCart");
+		List<Cart> currCart = (List<Cart>) session.getAttribute("userCart");
+		Customer loggedInCustomer = (Customer) session.getAttribute("userDetails");
+		System.out.println("User logged in is ////////////////////////////////"+loggedInCustomer.getFirstName());
 		
 		//Product quantity stock management
-		//List<Cart> currentCart = this.updateProductQuantity(currCart);
+		List<Cart> currentCart = this.updateProductQuantity(currCart); //this work when we have one product selected once
+		orderDao.beginTransaction(); //remember to close this session before method termination
 		
 		//profit percentage computation
 		int ordQuant = 0; double amt = 0; double vendorProf = 0; double myCompanyProf = 0;
@@ -200,7 +203,7 @@ public class OrderController {
 			order.setOrderStatus("completed");
 			order.setQuantity(ordQuant);
 			order.setOrderAmount(amt);
-			//order.setCustomer(userDetail);
+			order.setCustomer(loggedInCustomer);
 			orderDao.save(order); //saving the current order since payment has been done...
 			
 			//card details are correct and payment has been triggered.
@@ -264,10 +267,14 @@ public class OrderController {
 			@RequestParam("country") String country,
 			Model model)
 	{
-		orderDao.beginTransaction();
+		
 		String message = "";
 		HttpSession session = request.getSession();
-		List<Cart> currentCart = (List<Cart>) session.getAttribute("userCart");
+		List<Cart> currCart = (List<Cart>) session.getAttribute("userCart");
+		
+		//Product quantity stock management
+		List<Cart> currentCart = this.updateProductQuantity(currCart); //this work when we have one product selected once
+		orderDao.beginTransaction(); //remember to close this session before method termination
 		
 		//get guest customer information and persist in database... 
 		Customer guest = new Customer();
@@ -388,10 +395,12 @@ public class OrderController {
 	{
 		for(int k = 0; k < cartList.size(); k ++)
 		{
+			productDao.beginTransaction();
 			Product prod = cartList.get(k).getProduct();
+			
 			if(cartList.get(k).getQuantity() > prod.getProductQuantity())
 			{
-				//return false; //insteady of returning false, update the current quantity to this
+				//return false; //instead of returning false, update the current quantity to this
 				cartList.get(k).setQuantity(prod.getProductQuantity());
 				prod.setProductQuantity(0); //if we purchased all then new stock quantity is zero
 				productDao.save(prod);
@@ -401,6 +410,7 @@ public class OrderController {
 				prod.setProductQuantity(prod.getProductQuantity() - cartList.get(k).getQuantity());
 				productDao.save(prod);
 			}
+			productDao.commitTransaction();
 		}
 		
 		return cartList;
