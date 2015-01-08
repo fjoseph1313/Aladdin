@@ -119,9 +119,9 @@
 								<!--<c:if test="${empty currentOrderNew}">-->
 									<c:forEach var="item" items="${thisCart}">
 										<tr>
-											<td></td>
+											<td>${item.product.productName}</td>
 											<td>${item.quantity}</td>
-											<td>$${item.quantity}</td>
+											<td>$${item.product.price * item.quantity}</td>
 										</tr>
 									</c:forEach>
 								<!--</c:if>-->
