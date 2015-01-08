@@ -87,7 +87,7 @@
 
 		console.log((dob.getFullYear() - today.getFullYear()));
 
-		if ((today.getFullYear()-dob.getFullYear() ) < 18) {
+		if ((today.getFullYear() - dob.getFullYear()) < 18) {
 			// this allows the use of i18 for the error msgs
 			//alert("here");
 			return "Age should be 18 or more";
@@ -122,3 +122,40 @@
 
 <!-- Bootstrap Core JavaScript -->
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		var emailok = false;
+		var email = $("#inputEmail");
+		var emailInfo = $("#username_availability_result"); 
+
+		email.blur(function() {
+			
+			$.ajax({
+				type : "GET",
+				data : "email=" + $("#inputEmail").val(),
+				url : "http://localhost:8080/Aladdin/availability",
+				beforeSend : function() {
+					emailInfo.html("Checking Email...."); //show checking or loading image
+				},
+				success : function(data) {
+					
+					
+					
+					if (data == "0") {
+						emailok = false;
+						emailInfo.html("Email already exists.");
+					} else {
+						emailok = true;
+						emailInfo.html("Email is Available.");
+					}
+				}
+			});
+		});
+
+	});
+</script>
+
