@@ -37,6 +37,8 @@ public class ProductDAOImpl extends HibernateDAO<Product, Long> implements
 		return results;
 	}
 
+	
+	
 	@Override
 	public List<Product> findRandomProducts() {
 
