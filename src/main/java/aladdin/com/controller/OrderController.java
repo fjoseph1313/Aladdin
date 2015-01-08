@@ -23,7 +23,9 @@ import aladdin.com.dao.OrderDAO;
 import aladdin.com.dao.PaymentDAO;
 import aladdin.com.dao.ProductDAO;
 import aladdin.com.dao.TransactionHistoryDAO;
+import aladdin.com.model.Address;
 import aladdin.com.model.Cart;
+import aladdin.com.model.Customer;
 import aladdin.com.model.Order;
 import aladdin.com.model.Payment;
 import aladdin.com.model.Product;
@@ -39,87 +41,7 @@ public class OrderController {
 	CustomerDAO custDao = daoFactory.getCustomerDAO();
 	TransactionHistoryDAO histDao = daoFactory.getTransactionHistoryDAO();
 	PaymentDAO payDao = daoFactory.getPaymentDAO();
-	
-	/*@RequestMapping(value = "/order/{id}", method = RequestMethod.POST)
-	public String createOrder(@PathVariable Long id, @RequestParam("quantity") int qn, Model model )
-	{
-		//get current logged in customer and create new order and find if its order still exists, else create new
-		Long custId = new Long(1);
-		String result = "index";
-		orderDao.beginTransaction();
-		Order existingOrder = orderDao.findByCustomerIdAndStatus(custId);
-		Product fetchedProduct = (Product) productDao.findByPrimaryKey(id);
-		Customer fetchedCustomer = (Customer) custDao.findByPrimaryKey(custId);
-		
-		//we should check the quntity entered by customer is less than available copies.
-		System.out.println("selected quantity is ***************************: "+qn);
-		if(qn > fetchedProduct.getProductQuantity())
-		{
-			//return to productdetails page
-			String forQuantity = "We dont have sufficient, choose less than "+fetchedProduct.getProductQuantity();
-			model.addAttribute("lessQuantity", forQuantity);
-			model.addAttribute("product", fetchedProduct);
-			result = "productDetails";
-		}
-		else
-		{
-		
-			Cart cart = new Cart(); //creating new cart
-			
-			if(existingOrder != null) //qn must be less than stock quantity
-			{
-				//update fetchedproduct in quantity and 
-				fetchedProduct.setProductQuantity(fetchedProduct.getProductQuantity() - qn);
-				productDao.save(fetchedProduct);//update changes to product
-				
-				cart.setProduct(fetchedProduct);
-				cart.setQuantity(qn);
-				cart.setOrder(existingOrder);
-				existingOrder.getCart().add(cart); //just for bidirectional association.
-				cartDao.save(cart);
-				
-				existingOrder.setOrderAmount(existingOrder.getOrderAmount() + (fetchedProduct.getPrice() * cart.getQuantity()));
-				existingOrder.setQuantity(existingOrder.getQuantity() + cart.getQuantity());
-				
-				orderDao.save(existingOrder); //persisting an updated order
-				model.addAttribute("currentOrder", existingOrder); //set this order into the session for checkout
-				orderDao.commitTransaction();
-				
-				result = "orderView";
-			}
-			else{	
-				Order order = new Order();
-				order.setCustomer(fetchedCustomer); //this must be the loggedIn customer
-				//must populate cart first before order.
-				cart.setProduct(fetchedProduct);
-				cart.setOrder(order);
-				cart.setQuantity(qn);
-				
-				//update fetchedproduct in quantity and 
-				fetchedProduct.setProductQuantity(fetchedProduct.getProductQuantity() - qn);
-				productDao.save(fetchedProduct);//update changes to product
-							
-				order.setOrderCreateDate(new Date());
-				order.setOrderAmount(fetchedProduct.getPrice() * cart.getQuantity());
-				System.out.println("order amt is : =======new order======="+ fetchedProduct.getPrice() * cart.getQuantity());
-				order.setQuantity(cart.getQuantity());
-				order.setOrderStatus("new"); //assumption, on first creation, set status new.
-				
-				cartDao.save(cart);
-				orderDao.save(order);
-				model.addAttribute("currentOrder", order); //set this order into the session for checkout
-				model.addAttribute("currentOrderNew", cart); //set this order into the session for checkout
-				orderDao.commitTransaction();
-				//avoid duplicates on refresh
-				qn = 0; cart = null; 
-				
-				result = "orderView";
-			}
-		}
-		
-		return result;
-	}*/
-	
+
 	
 	@RequestMapping(value = "/order/{id}", method = RequestMethod.POST)
 	public String createOrder(@PathVariable Long id, @RequestParam("quantity") int qn, Model model, HttpServletRequest request )
@@ -208,75 +130,15 @@ public class OrderController {
 		return "orderView";
 	}
 	
-	
-	/*@RequestMapping(value = "/payment/{id}", method = RequestMethod.GET)
-	public String preparePayment(@PathVariable("id") Long id, Model model)
-	{
-		orderDao.beginTransaction();
-		Order order = orderDao.findByPrimaryKey(id);
-		model.addAttribute(order);
-		orderDao.commitTransaction();
-		return "cardDetails";
-	}*/
+	//Dispatcher, Registered Customer or Guest Customer
 	@RequestMapping(value = "/payment", method = RequestMethod.GET)
 	public String preparePayment(Model model)
 	{
-		return "cardDetails";
+		//return "cardDetails";
+		return "guestCheckout";
 	}
 	
-	/*@RequestMapping(value = "/payment", method = RequestMethod.POST)
-	public String makePayment(//@PathVariable Long id,
-			@RequestParam("cardNumber") String card,
-			@RequestParam("cvv") String cvv,
-			@RequestParam("expireDt") String ex_dt,
-			Model model)
-	{
-		System.out.println("this card is ++++++++++++++++++++++++++++++"+card);
-		String message = "";
-				
-		Long custId = new Long(1);
-		orderDao.beginTransaction();
-		Order orderToPay = orderDao.findByCustomerIdAndStatus(custId); // get this customer's order which is still new, ready to pay
-		//concatenate the input parameters
-		String paymentDetails = card+cvv+ex_dt+orderToPay.getOrderAmount(); System.out.println(paymentDetails);
 		
-		RestTemplate restTemp = new RestTemplate();
-		String url = "http://localhost:8080/Aladdin/paymentrest/{paymentDetails}";
-		String result = restTemp.getForObject(url, String.class);
-		
-		if(result.equalsIgnoreCase("false"))
-		{
-			//return to the card details form..
-			message = "Payment Rejected, Insufficient Amount..";
-			model.addAttribute("errormessage", message);
-			orderDao.commitTransaction();
-			return "cardDetails";
-		}
-		else
-		{
-			//card details are correct and payment has been triggered.
-			Payment newPayment = new Payment();
-			newPayment.setOrder(orderToPay);
-			newPayment.setPaymentAmount(orderToPay.getOrderAmount());
-			newPayment.setPaymentType("VisaCard/MasterCard");
-			payDao.save(newPayment); //persisting this payment.
-			
-			//change order status 
-			orderToPay.setOrderStatus("closed");
-			
-			TransactionHistory history = new TransactionHistory();
-			history.setTransactionDate(new Date());
-			history.setPayment(newPayment);
-			histDao.save(history); //saving transaction history.
-			
-			message = "Payment has been done successfully!";
-			model.addAttribute("successmessage", message);
-			orderDao.commitTransaction();
-		}
-		
-		return "paymentComfirmation";
-	}*/
-	
 	@RequestMapping(value = "/payment", method = RequestMethod.POST)
 	public String makePayment(/*@PathVariable Long id,*/ HttpServletRequest request,
 			@RequestParam("cardNumber") String card,
@@ -315,9 +177,7 @@ public class OrderController {
 		String paymentDetails = card+cvv+ex_dt+amt; System.out.println("Path Variable +++++++++"+paymentDetails);
 		
 		//Consuming restful webservice....
-		RestTemplate restTemp = new RestTemplate();
-		String url = "http://localhost:8080/springhibernate/validate/"+paymentDetails;
-		String result = restTemp.getForObject(url, String.class);
+		String result = this.callRestfulness(paymentDetails);
 		
 		if(result.equalsIgnoreCase("false"))
 		{
@@ -383,26 +243,131 @@ public class OrderController {
 		return "paymentComfirmation";
 	}
 	
-	/*@RequestMapping(value = "/order/cancel/{id}", method = RequestMethod.GET)
-	public String cancelOrder(@PathVariable Long id, Model model)
+	
+	@RequestMapping(value = "/guestpayment", method = RequestMethod.POST)
+	public String guestPayment(/*@PathVariable Long id,*/ HttpServletRequest request,
+			@RequestParam("cardNumber") String card,
+			@RequestParam("cvv") String cvv,
+			@RequestParam("expireDt") String ex_dt,
+			@RequestParam("firstName") String firstName,
+			@RequestParam("lastName") String lastName,
+			@RequestParam("phoneNumber") String phoneNumber,
+			@RequestParam("emailAddress") String emailAddress,
+			@RequestParam("state") String state,
+			@RequestParam("street") String street,
+			@RequestParam("city") String city,
+			@RequestParam("zip") String zip,
+			@RequestParam("country") String country,
+			Model model)
 	{
 		orderDao.beginTransaction();
-		Order order = orderDao.findByPrimaryKey(id);
-		//before deleting order, traverse all the carts and rollback product transactions.
-		List<Cart> cartsInOrder = order.getCart();
-		for(int i = 0; i < cartsInOrder.size(); i ++)
+		String message = "";
+		HttpSession session = request.getSession();
+		List<Cart> currentCart = (List<Cart>) session.getAttribute("userCart");
+		
+		//get guest customer information and persist in database... 
+		Customer guest = new Customer();
+		Address guestAdd = new Address();
+		guestAdd.setCity(city);
+		guestAdd.setCountry(country);
+		guestAdd.setState(state);
+		guestAdd.setStreet(street);
+		guestAdd.setZip(zip);
+		guest.setEmailAddress(emailAddress);
+		
+		guest.setFirstName(firstName);
+		guest.setLastName(lastName);
+		guest.setEmailAddress(emailAddress);
+		guest.setAddress(guestAdd); //add address to this guest customer
+		custDao.save(guest); //guest info peristed. but cant login...
+		
+		//profit percentage computation
+		int ordQuant = 0; double amt = 0; double vendorProf = 0; double myCompanyProf = 0;
+
+		for(int i = 0; i < currentCart.size(); i ++)
 		{
-			Cart thisCart = (Cart) cartsInOrder.get(i);
-			Product thisProd = thisCart.getProduct();
-			thisProd.setProductQuantity(thisProd.getProductQuantity() + thisCart.getQuantity()); //add back the selected quantity
-			//save this current modified product in the database
-			productDao.save(thisProd); //changes persisted.
+			ordQuant += currentCart.get(i).getQuantity();
+			amt += currentCart.get(i).getQuantity() * currentCart.get(i).getProduct().getPrice();
+			
+			//for every product, calculate profit
+			double totalProf =  (currentCart.get(i).getProduct().getPrice() 
+					- (currentCart.get(i).getProduct().getPrice() * 0.8)) * currentCart.get(i).getQuantity();
+			System.out.println("total profit for item "+currentCart.get(i).getQuantity()+ " ==== "+totalProf);
+			double myCompPr = ( currentCart.get(i).getProduct().getVendor().getProfitPercentage() / 100 )
+					* totalProf;
+			vendorProf += myCompPr;
+			myCompanyProf += (totalProf - myCompPr);
 		}
 		
-		orderDao.delete(order);
-		orderDao.commitTransaction();
-		return "index"; //cancelled order.. return to index and start new shopping
-	}*/
+		//concatenate the input parameters
+		String paymentDetails = card+cvv+ex_dt+amt; System.out.println("Path Variable +++++++++"+paymentDetails);
+		
+		//Consuming restful webservice....
+		String result = this.callRestfulness(paymentDetails);
+		
+		if(result.equalsIgnoreCase("false"))
+		{
+			//return to the card details form..
+			message = "Payment Rejected, Either Information provided was wrong or you have Insufficient Amount..";
+			model.addAttribute("errormessage", message);
+			orderDao.commitTransaction();
+			return "guestCheckout";
+		}
+		else
+		{
+			//now create order and populate it with the cart.
+			Order order = new Order();
+			order.setCart(currentCart); //a cart must exist in the session to be persisted..
+			order.setOrderCreateDate(new Date());
+			order.setOrderStatus("completed");
+			order.setQuantity(ordQuant);
+			order.setOrderAmount(amt);
+			//order.setCustomer(userDetail);
+			orderDao.save(order); //saving the current order since payment has been done...
+			
+			//card details are correct and payment has been triggered.
+			Payment newPayment = new Payment();
+			newPayment.setOrder(order);
+			newPayment.setPaymentAmount(order.getOrderAmount());
+			newPayment.setPaymentType("VisaCard/MasterCard");
+			payDao.save(newPayment); //persisting this payment.
+			
+			//change order status 
+			//order.setOrderStatus("closed");
+			
+			/*Calculation on profit and store it on the transaction table...
+			traversing on all products on the order and calculate the profit
+			this could be done above! Should persist carts from this order*/
+			for(int j = 0; j < currentCart.size(); j ++)
+			{
+				Cart cart = new Cart();
+				cart.setProduct(currentCart.get(j).getProduct());
+				cart.setQuantity(currentCart.get(j).getQuantity());
+				cart.setOrder(order);
+				cartDao.save(cart);
+				
+			}
+			
+			TransactionHistory history = new TransactionHistory();
+			history.setTransactionDate(new Date());
+			history.setPayment(newPayment);
+			history.setVendorProfit(vendorProf);
+			history.setMyCompanyProfit(myCompanyProf);
+			histDao.save(history); //saving transaction history.
+			
+			message = "Payment has been done successfully!";
+			model.addAttribute("successmessage", message);
+			model.addAttribute("paidOrder", order);
+			orderDao.commitTransaction();
+			
+			//resert cart to null
+			currentCart = null;
+			session.setAttribute("userCart", currentCart);
+		}
+		
+		return "paymentComfirmation";
+	}
+
 
 	@RequestMapping(value = "/order/cancel", method = RequestMethod.GET)
 	public String cancelOrder(HttpServletRequest request, Model model)
@@ -435,5 +400,14 @@ public class OrderController {
 		}
 		
 		return cartList;
+	}
+	
+	public String callRestfulness(String uri)
+	{
+		RestTemplate restTemp = new RestTemplate();
+		String url = "http://localhost:8080/springhibernate/validate/"+uri;
+		String result = restTemp.getForObject(url, String.class);
+		
+		return result;
 	}
 }

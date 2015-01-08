@@ -31,19 +31,22 @@ public class ReportController {
 	@Autowired
 	private CartDAOImpl cartDao;
 
+	private static final String SALES_REPORT = "salesReport";
+	private static final String WEEKLY_SALES_REPORT = "weeklySalesReport";
+	private static final String MONTHLY_SALES_REPORT = "monthlySalesReport";
+	private static final String YEARLY_SALES_REPORT = "yearlySalesReport";
+
 	@RequestMapping(value = "/getReportPage", method = RequestMethod.GET)
 	public String getReposrtForm() {
 
 		return "report";
 	}
-	
+
 	@RequestMapping(value = "/getReportVendorPage", method = RequestMethod.GET)
 	public String getReposrtVendorForm() {
 
 		return "reportVendor";
 	}
-
-
 
 	@RequestMapping(value = "/getReport", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPDF() throws IOException {
@@ -52,14 +55,15 @@ public class ReportController {
 		List<Cart> carts = cartDao.getAll();
 		cartDao.commitTransaction();
 
-		SalesReport salesReport = new SalesReport(carts);
+		SalesReport salesReport = new SalesReport(carts, SALES_REPORT);
 		salesReport.build();
 
-		byte[] contents = loadFile(Templates.TEMP_STORAGE + "salesReport.pdf");
+		byte[] contents = loadFile(Templates.TEMP_STORAGE + SALES_REPORT
+				+ ".pdf");
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
-		String filename = "salesReport.pdf";
+		String filename = SALES_REPORT + ".pdf";
 		headers.setContentDispositionFormData(filename, filename);
 		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(contents,
@@ -80,21 +84,22 @@ public class ReportController {
 		List<Cart> carts = cartDao.findCartsByDates(fromDate, toDate);
 		cartDao.commitTransaction();
 
-		SalesReport salesReport = new SalesReport(carts);
+		SalesReport salesReport = new SalesReport(carts, WEEKLY_SALES_REPORT);
 		salesReport.build();
 
-		byte[] contents = loadFile(Templates.TEMP_STORAGE + "salesReport.pdf");
+		byte[] contents = loadFile(Templates.TEMP_STORAGE + WEEKLY_SALES_REPORT
+				+ ".pdf");
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
-		String filename = "weeklySalesReport.pdf";
+		String filename = WEEKLY_SALES_REPORT + ".pdf";
 		headers.setContentDispositionFormData(filename, filename);
 		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(contents,
 				headers, HttpStatus.OK);
 		return response;
 	}
-	
+
 	@RequestMapping(value = "/getReportByMonth", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPDFMonth() throws IOException {
 		Date fromDate = new Date();
@@ -108,14 +113,15 @@ public class ReportController {
 		List<Cart> carts = cartDao.findCartsByDates(fromDate, toDate);
 		cartDao.commitTransaction();
 
-		SalesReport salesReport = new SalesReport(carts);
+		SalesReport salesReport = new SalesReport(carts, MONTHLY_SALES_REPORT);
 		salesReport.build();
 
-		byte[] contents = loadFile(Templates.TEMP_STORAGE + "salesReport.pdf");
+		byte[] contents = loadFile(Templates.TEMP_STORAGE
+				+ MONTHLY_SALES_REPORT + ".pdf");
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
-		String filename = "monthlySalesReport.pdf";
+		String filename = MONTHLY_SALES_REPORT + ".pdf";
 		headers.setContentDispositionFormData(filename, filename);
 		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(contents,
@@ -127,30 +133,36 @@ public class ReportController {
 	public ResponseEntity<byte[]> getPDFYear() throws IOException {
 
 		Calendar cal = Calendar.getInstance();
-		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.JANUARY), 01);
+		cal.set(cal.get(Calendar.YEAR), Calendar.JANUARY, 01);
 		Date fromDate = cal.getTime();
+//		cal.getInstance();
 		cal.add(Calendar.YEAR, 1);
 		Date toDate = cal.getTime();
-
+		
+		
+		
 		cartDao.beginTransaction();
 		List<Cart> carts = cartDao.findCartsByDates(fromDate, toDate);
 		cartDao.commitTransaction();
+		
+		
 
-		SalesReport salesReport = new SalesReport(carts);
+		SalesReport salesReport = new SalesReport(carts, YEARLY_SALES_REPORT);
 		salesReport.build();
 
-		byte[] contents = loadFile(Templates.TEMP_STORAGE + "salesReport.pdf");
+		byte[] contents = loadFile(Templates.TEMP_STORAGE + YEARLY_SALES_REPORT
+				+ ".pdf");
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
-		String filename = "yearlySalesReport.pdf";
+		String filename = YEARLY_SALES_REPORT + ".pdf";
 		headers.setContentDispositionFormData(filename, filename);
 		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(contents,
 				headers, HttpStatus.OK);
 		return response;
 	}
-	
+
 	@RequestMapping(value = "/getReportByVendor", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPDFVendor(HttpServletRequest request)
 			throws IOException {
@@ -163,14 +175,16 @@ public class ReportController {
 		List<Cart> carts = cartDao.findCartsByVendor(vendor);
 		cartDao.commitTransaction();
 
-		SalesReport salesReport = new SalesReport(carts);
+		SalesReport salesReport = new SalesReport(carts,
+				vendor.getBusinessName() + SALES_REPORT);
 		salesReport.build();
 
-		byte[] contents = loadFile(Templates.TEMP_STORAGE + "salesReport.pdf");
+		byte[] contents = loadFile(Templates.TEMP_STORAGE
+				+ vendor.getBusinessName() + SALES_REPORT + ".pdf");
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
-		String filename = vendor.getBusinessName() + "salesReport.pdf";
+		String filename = vendor.getBusinessName() + SALES_REPORT + ".pdf";
 		headers.setContentDispositionFormData(filename, filename);
 		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(contents,
@@ -196,21 +210,24 @@ public class ReportController {
 				toDate);
 		cartDao.commitTransaction();
 
-		SalesReport salesReport = new SalesReport(carts);
+		SalesReport salesReport = new SalesReport(carts,
+				vendor.getBusinessName() + WEEKLY_SALES_REPORT);
 		salesReport.build();
 
-		byte[] contents = loadFile(Templates.TEMP_STORAGE + "salesReport.pdf");
+		byte[] contents = loadFile(Templates.TEMP_STORAGE
+				+ vendor.getBusinessName() + WEEKLY_SALES_REPORT + ".pdf");
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
-		String filename = vendor.getBusinessName() + "weeklySalesReport.pdf";
+		String filename = vendor.getBusinessName() + WEEKLY_SALES_REPORT
+				+ ".pdf";
 		headers.setContentDispositionFormData(filename, filename);
 		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(contents,
 				headers, HttpStatus.OK);
 		return response;
 	}
-	
+
 	@RequestMapping(value = "/getReportByVendorMonthly", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPDFVendorMonth(HttpServletRequest request)
 			throws IOException {
@@ -229,14 +246,19 @@ public class ReportController {
 				toDate);
 		cartDao.commitTransaction();
 
-		SalesReport salesReport = new SalesReport(carts);
+		System.out.println("==========" + carts.size());
+
+		SalesReport salesReport = new SalesReport(carts,
+				vendor.getBusinessName() + MONTHLY_SALES_REPORT);
 		salesReport.build();
 
-		byte[] contents = loadFile(Templates.TEMP_STORAGE + "salesReport.pdf");
+		byte[] contents = loadFile(Templates.TEMP_STORAGE
+				+ vendor.getBusinessName() + MONTHLY_SALES_REPORT + ".pdf");
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
-		String filename = vendor.getBusinessName() + "monthlySalesReport.pdf";
+		String filename = vendor.getBusinessName() + MONTHLY_SALES_REPORT
+				+ ".pdf";
 		headers.setContentDispositionFormData(filename, filename);
 		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(contents,
@@ -250,9 +272,11 @@ public class ReportController {
 
 		Vendor vendor = (Vendor) request.getSession().getAttribute(
 				"userDetails");
+		
 		Calendar cal = Calendar.getInstance();
-		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.JANUARY), 01);
+		cal.set(cal.get(Calendar.YEAR), Calendar.JANUARY, 01);
 		Date fromDate = cal.getTime();
+//		cal.getInstance();
 		cal.add(Calendar.YEAR, 1);
 		Date toDate = cal.getTime();
 
@@ -260,13 +284,15 @@ public class ReportController {
 		List<Cart> carts = cartDao.findCartsByDates(fromDate, toDate);
 		cartDao.commitTransaction();
 
-		SalesReport salesReport = new SalesReport(carts);
+		SalesReport salesReport = new SalesReport(carts, YEARLY_SALES_REPORT);
 		salesReport.build();
-		byte[] contents = loadFile(Templates.TEMP_STORAGE + "salesReport.pdf");
+		byte[] contents = loadFile(Templates.TEMP_STORAGE
+				+ vendor.getBusinessName() + YEARLY_SALES_REPORT + ".pdf");
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
-		String filename = vendor.getBusinessName() + "yearlySalesReport.pdf";
+		String filename = vendor.getBusinessName() + YEARLY_SALES_REPORT
+				+ ".pdf";
 		headers.setContentDispositionFormData(filename, filename);
 		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(contents,

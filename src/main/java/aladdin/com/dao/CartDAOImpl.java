@@ -16,11 +16,14 @@ public class CartDAOImpl extends HibernateDAO<Cart, Long> implements CartDAO {
 	}
 
 	public List<Cart> findCartsByDates(Date fromDate, Date toDate) {
+		System.out.println("===========FROM:"+fromDate.toString());
+		System.out.println("===========TO:"+toDate.toString());
 		String HQL = "FROM Cart ct WHERE ct.order.orderCreateDate > :fromDate AND ct.order.orderCreateDate < :toDate";
 		Query query = HibernateUtil.getSession().createQuery(HQL);
 		query.setParameter("fromDate", fromDate);
 		query.setParameter("toDate", toDate);
 		List<Cart> carts = query.list();
+		System.out.println("===========VALUES:"+carts.size());
 		return carts;
 	}
 
