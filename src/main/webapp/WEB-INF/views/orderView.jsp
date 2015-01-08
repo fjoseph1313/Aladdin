@@ -145,7 +145,8 @@
 							<div class="form-group">
 								<div class="col-sm-offset-1 col-sm-11">
 									<a href="<spring:url value="/order/cancel" />">Cancel Order </a> |
-									<a href="<spring:url value="/payment" />"> Checkout </a> |
+									<a href="<spring:url value="/payment" />"> Checkout </a> | 
+									<a href="<spring:url value="/guestCheckout" />"> Checkout as Guest </a> | 
 									<a href="<spring:url value="/" />"> Continue Shopping</a>
 								</div>
 							</div>

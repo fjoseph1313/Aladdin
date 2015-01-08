@@ -134,7 +134,11 @@ public class OrderController {
 	@RequestMapping(value = "/payment", method = RequestMethod.GET)
 	public String preparePayment(Model model)
 	{
-		//return "cardDetails";
+		return "cardDetails";
+	}
+	@RequestMapping(value = "/guestCheckout", method = RequestMethod.GET)
+	public String prepareGuestCheckout(Model model)
+	{
 		return "guestCheckout";
 	}
 	
@@ -322,7 +326,7 @@ public class OrderController {
 			order.setOrderStatus("completed");
 			order.setQuantity(ordQuant);
 			order.setOrderAmount(amt);
-			//order.setCustomer(userDetail);
+			order.setCustomer(guest); //this order is for the guest
 			orderDao.save(order); //saving the current order since payment has been done...
 			
 			//card details are correct and payment has been triggered.
