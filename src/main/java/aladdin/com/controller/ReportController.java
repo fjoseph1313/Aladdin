@@ -73,10 +73,11 @@ public class ReportController {
 
 	@RequestMapping(value = "/getReportByWeek", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPDFWeek() throws IOException {
-		Date fromDate = new Date();
-
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(fromDate);
+		cal.set(Calendar.HOUR, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		Date fromDate = cal.getTime();
 		cal.add(Calendar.WEEK_OF_MONTH, 1);
 		Date toDate = cal.getTime();
 
@@ -102,12 +103,15 @@ public class ReportController {
 
 	@RequestMapping(value = "/getReportByMonth", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPDFMonth() throws IOException {
-		Date fromDate = new Date();
-
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(fromDate);
+		cal.set(Calendar.HOUR, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		Date fromDate = cal.getTime();
 		cal.add(Calendar.MONTH, 1);
 		Date toDate = cal.getTime();
+
+		
 
 		cartDao.beginTransaction();
 		List<Cart> carts = cartDao.findCartsByDates(fromDate, toDate);
@@ -134,10 +138,13 @@ public class ReportController {
 
 		Calendar cal = Calendar.getInstance();
 		cal.set(cal.get(Calendar.YEAR), Calendar.JANUARY, 01);
+		cal.set(Calendar.HOUR, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
 		Date fromDate = cal.getTime();
-//		cal.getInstance();
 		cal.add(Calendar.YEAR, 1);
 		Date toDate = cal.getTime();
+
 		
 		
 		
@@ -198,10 +205,13 @@ public class ReportController {
 
 		Vendor vendor = (Vendor) request.getSession().getAttribute(
 				"userDetails");
-		Date fromDate = new Date();
+		
 
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(fromDate);
+		cal.set(Calendar.HOUR, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		Date fromDate = cal.getTime();
 		cal.add(Calendar.WEEK_OF_MONTH, 1);
 		Date toDate = cal.getTime();
 
@@ -234,10 +244,11 @@ public class ReportController {
 
 		Vendor vendor = (Vendor) request.getSession().getAttribute(
 				"userDetails");
-		Date fromDate = new Date();
-
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(fromDate);
+		cal.set(Calendar.HOUR, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		Date fromDate = cal.getTime();
 		cal.add(Calendar.MONTH, 1);
 		Date toDate = cal.getTime();
 
@@ -275,10 +286,13 @@ public class ReportController {
 		
 		Calendar cal = Calendar.getInstance();
 		cal.set(cal.get(Calendar.YEAR), Calendar.JANUARY, 01);
+		cal.set(Calendar.HOUR, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
 		Date fromDate = cal.getTime();
-//		cal.getInstance();
 		cal.add(Calendar.YEAR, 1);
 		Date toDate = cal.getTime();
+
 
 		cartDao.beginTransaction();
 		List<Cart> carts = cartDao.findCartsByDates(fromDate, toDate);

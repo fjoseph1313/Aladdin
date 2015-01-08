@@ -17,7 +17,12 @@ public class ProductDAOImpl extends HibernateDAO<Product, Long> implements
 	@Override
 	public Product findProductByIdCustom(Long id) {
 
-		String hql = "SELECT P FROM Product P WHERE P.id=:id";
+		String hql = "from Product vd join fetch vd.vendor u where "
+				+ " vd.id=:id" + " and vd.activeState = '1'"
+				// + " and u.id = 1 "
+				+ " and u.enable='1'";
+
+		// String hql = "SELECT P FROM Product P WHERE P.id=:id";
 		Query query = HibernateUtil.getSession().createQuery(hql);
 		query.setParameter("id", id);
 		Product results = (Product) query.uniqueResult();
@@ -29,7 +34,13 @@ public class ProductDAOImpl extends HibernateDAO<Product, Long> implements
 	@Override
 	public List<Product> findAllProductsByProductCategoryId(Long id) {
 
-		String hql = "SELECT P FROM Product P WHERE P.productCategory.id = :id";
+		String hql = "from Product vd join fetch vd.vendor u where "
+				+ " vd.productCategory.id = :id" + " and vd.activeState = '1'"
+				// + " and u.id = 1 "
+				+ " and u.enable='1'";
+
+		// String hql =
+		// "SELECT P FROM Product P WHERE P.productCategory.id = :id";
 		Query query = HibernateUtil.getSession().createQuery(hql);
 		query.setParameter("id", id);
 		List<Product> results = query.list();
@@ -37,19 +48,27 @@ public class ProductDAOImpl extends HibernateDAO<Product, Long> implements
 		return results;
 	}
 
-	
-	
+	// String hql = "from Product vd join fetch vd.vendor u where "
+	// + " vd.activeState = '1'"
+	// //+ " and u.id = 1 "
+	// + " and u.enable='1'"
+	// + " ORDER BY RAND()";
+
 	@Override
 	public List<Product> findRandomProducts() {
 
-		String hql = "SELECT P FROM Product P ORDER BY RAND()";
+		String hql = "from Product vd join fetch vd.vendor u where "
+				+ " vd.activeState = '1'"
+				// + " and u.id = 1 "
+				+ " and u.enable='1'" + " ORDER BY RAND()";
+
 		Query query = HibernateUtil.getSession().createQuery(hql);
-//		query.setParameter("id", id);
+		// query.setParameter("id", id);
 		List<Product> results = query.setMaxResults(6).list();
 		System.out.print(results);
 		return results;
 
-//		return null;
+		// return null;
 	}
 
 }
