@@ -10,19 +10,21 @@
 
 		<intercept-url pattern="/vendor/**"
 			access="hasAnyRole('ROLE_ADMIN','ROLE_VENDOR')" />
-		<intercept-url pattern="/payment/**"
-			access="hasAnyRole('ROLE_USER')" />
-			
+		<intercept-url pattern="/payment/**" access="hasAnyRole('ROLE_USER')" />
+
 		<intercept-url pattern="/admin/**" access="hasAnyRole('ROLE_ADMIN')" />
 		<form-login login-page="/clogin" default-target-url="/list"
-			authentication-failure-url="/cloginfailed" 
-			
+			authentication-failure-url="/cloginfailed"
+
 			authentication-success-handler-ref="myAuthenticationSuccessHandler" />
 
+		<!--  access-denied-handler ref="accessDeniedHandler" />-->
 
 	</http>
 
-
+	<!-- beans:bean id="accessDeniedHandler" class="aladdin.security.CustomAccessDeniedHandler">
+		<property name="accessDeniedUrl" value="accessDenied.jsp" />
+	</beans:bean-->
 
 	<beans:bean id="customAuthenticationFailureHandler"
 		class="aladdin.security.CustomAuthenticationFailureHandler" />
@@ -47,5 +49,5 @@
 	<beans:bean id="encoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
-	<!-- debug /-->
+	<!-- debug / -->
 </beans:beans>
