@@ -10,7 +10,7 @@
 
 		<intercept-url pattern="/vendor/**"
 			access="hasAnyRole('ROLE_ADMIN','ROLE_VENDOR')" />
-		<intercept-url pattern="/order/payment/**"
+		<intercept-url pattern="/payment/**"
 			access="hasAnyRole('ROLE_USER')" />
 			
 		<intercept-url pattern="/admin/**" access="hasAnyRole('ROLE_ADMIN')" />
