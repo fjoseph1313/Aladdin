@@ -25,7 +25,14 @@
 
 			<li><a href="#">Contact</a></li>
 
-			<li><a href="cart" style="color: white;"><img
+			<li><a href="
+						<c:if test = "${empty userCart }">
+							<c:out value = '#' />
+						</c:if>
+						<c:if test = "${not empty userCart }">
+							<c:out value = 'cart' />
+						</c:if>
+						" style="color: white;"><img
 					src="<c:url value="/resources/images/shoppingCart.png" />"
 					class="cart_img" style="display: inline" /> ${userCart.size()}</a></li>
 

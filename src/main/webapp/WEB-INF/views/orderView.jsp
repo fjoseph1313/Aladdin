@@ -136,16 +136,16 @@
 							</table>
 							<div class="row">
 								<div class="col-md-6" style="text-align: right">
-									<b>Total Quantity : ${currentOrder.quantity }</b>
+									<b>Total Quantity : ${orderQuantity }</b>
 								</div>
 								<div class="col-md-6" style="text-align: right">
-									<b>Total Order Amount:$${currentOrder.orderAmount }</b>
+									<b>Total Order Amount:$${orderAmount }</b>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-1 col-sm-11">
-									<a href="<spring:url value="/order/cancel/${currentOrder.id}" />">Cancel Order </a> |
-									<a href="<spring:url value="/payment/${currentOrder.id}" />"> Checkout </a> |
+									<a href="<spring:url value="/order/cancel" />">Cancel Order </a> |
+									<a href="<spring:url value="/payment" />"> Checkout </a> |
 									<a href="<spring:url value="/" />"> Continue Shopping</a>
 								</div>
 							</div>

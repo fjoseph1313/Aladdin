@@ -38,7 +38,7 @@
 
 				<h3 style="margin-left: 16px">Payment Confirmation</h3>
 				<hr style="padding: 0px; margin: 0px;">
-
+				<p><font color = "green">${successmessage }</font>
 				
 				
 			</div>

@@ -13,7 +13,8 @@ public class TransactionHistory {
 	private Date transactionDate;
 	@OneToOne
 	private Payment payment;
-	
+	private double vendorProfit;
+	private double myCompanyProfit;
 	
 	
 	public Long getId() {
@@ -39,5 +40,20 @@ public class TransactionHistory {
 	public void setTransactionDate(Date transactionDate) {
 		this.transactionDate = transactionDate;
 	}
-	
+	public double getVendorProfit() {
+		return vendorProfit;
+	}
+
+	public void setVendorProfit(double vendorProfit) {
+		this.vendorProfit = vendorProfit;
+	}
+
+	public double getMyCompanyProfit() {
+		return myCompanyProfit;
+	}
+
+	public void setMyCompanyProfit(double myCompanyProfit) {
+		this.myCompanyProfit = myCompanyProfit;
+	}
+
 }
