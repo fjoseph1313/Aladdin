@@ -397,18 +397,23 @@ public class OrderController {
 		{
 			productDao.beginTransaction();
 			Product prod = cartList.get(k).getProduct();
+			Product prod1 = productDao.findByPrimaryKey(prod.getId()); //fetch new object from database, prod is in memory not changing
 			
-			if(cartList.get(k).getQuantity() > prod.getProductQuantity())
+			int prodQuant = prod1.getProductQuantity();
+			System.out.println("Quantity now is ......"+prodQuant);
+			if(cartList.get(k).getQuantity() > prodQuant)
 			{
+				System.out.println(cartList.get(k).getQuantity()+"quantities are -"+prodQuant);
 				//return false; //instead of returning false, update the current quantity to this
-				cartList.get(k).setQuantity(prod.getProductQuantity());
-				prod.setProductQuantity(0); //if we purchased all then new stock quantity is zero
-				productDao.save(prod);
+				cartList.get(k).setQuantity(prodQuant);
+				prod1.setProductQuantity(0); //if we purchased all then new stock quantity is zero
+				productDao.save(prod1);
 			}
 			else
 			{
-				prod.setProductQuantity(prod.getProductQuantity() - cartList.get(k).getQuantity());
-				productDao.save(prod);
+				System.out.println(cartList.get(k).getQuantity()+"quantities are -"+prodQuant);
+				prod1.setProductQuantity(prodQuant - cartList.get(k).getQuantity());
+				productDao.save(prod1);
 			}
 			productDao.commitTransaction();
 		}
