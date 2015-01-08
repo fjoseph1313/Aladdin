@@ -41,8 +41,8 @@
 					<div class="col-md-12">
 						<fieldset>
 							<legend class="registrationLegend">Payment Information</legend>
-							<p>${errormessage}
-							<form:form class="form-horizontal" 
+							<p><font color = "red">${errormessage} </font>
+							<form:form class="form-horizontal"  
 								action = "../payment" method = "post">
 								<div class="col-lg-10">
 									<div class="form-group">
