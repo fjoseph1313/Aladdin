@@ -249,7 +249,7 @@ public class OrderController {
 	
 	
 	@RequestMapping(value = "/guestpayment", method = RequestMethod.POST)
-	public String guestPayment(/*@PathVariable Long id,*/ HttpServletRequest request,
+	public String makePaymentGuest(/*@PathVariable Long id,*/ HttpServletRequest request,
 			@RequestParam("cardNumber") String card,
 			@RequestParam("cvv") String cvv,
 			@RequestParam("expireDt") String ex_dt,
