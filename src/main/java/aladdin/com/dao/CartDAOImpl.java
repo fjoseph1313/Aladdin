@@ -14,6 +14,14 @@ public class CartDAOImpl extends HibernateDAO<Cart, Long> implements CartDAO {
 	public CartDAOImpl() {
 		super(Cart.class);
 	}
+	
+	public int clearNullOrderCarts()
+	{
+		String hql = "FROM Cart ct WHERE ct.order = null";
+		Query query = HibernateUtil.getSession().createQuery(hql);
+		int rows = query.executeUpdate();
+		return rows;
+	}
 
 	public List<Cart> findCartsByDates(Date fromDate, Date toDate) {
 		System.out.println("===========FROM:"+fromDate.toString());
