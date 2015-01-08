@@ -94,6 +94,34 @@ public class ReportController {
 				headers, HttpStatus.OK);
 		return response;
 	}
+	
+	@RequestMapping(value = "/getReportByMonth", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> getPDFMonth() throws IOException {
+		Date fromDate = new Date();
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(fromDate);
+		cal.add(Calendar.MONTH, 1);
+		Date toDate = cal.getTime();
+
+		cartDao.beginTransaction();
+		List<Cart> carts = cartDao.findCartsByDates(fromDate, toDate);
+		cartDao.commitTransaction();
+
+		SalesReport salesReport = new SalesReport(carts);
+		salesReport.build();
+
+		byte[] contents = loadFile(Templates.TEMP_STORAGE + "salesReport.pdf");
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.parseMediaType("application/pdf"));
+		String filename = "monthlySalesReport.pdf";
+		headers.setContentDispositionFormData(filename, filename);
+		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(contents,
+				headers, HttpStatus.OK);
+		return response;
+	}
 
 	@RequestMapping(value = "/getReportByYear", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPDFYear() throws IOException {
@@ -122,7 +150,7 @@ public class ReportController {
 				headers, HttpStatus.OK);
 		return response;
 	}
-
+	
 	@RequestMapping(value = "/getReportByVendor", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPDFVendor(HttpServletRequest request)
 			throws IOException {

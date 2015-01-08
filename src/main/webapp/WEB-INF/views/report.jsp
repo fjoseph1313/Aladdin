@@ -53,7 +53,10 @@
 							<legend class="registrationLegend">Report</legend>
 						</fieldset>
 
-						<a href="<c:url value="/getReport"/>">Generate Report</a>
+						<a href="<c:url value="/getReport"/>">Generate Report</a> <br />
+						<a href="<c:url value="/getReportByWeek"/>">Generate Weekly Sales Report</a> <br />
+						<a href="<c:url value="/getReportByMonthly"/>">Generate Monthly Sales Report</a> <br />
+						<a href="<c:url value="/getReportByYear"/>">Generate Yearly Sales Report</a> <br />
 						
 
 					</div>
