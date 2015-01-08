@@ -68,6 +68,13 @@
 			return "Please give a valid  Phonenumber";
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
 
 	/****
 	function for Age
@@ -139,7 +146,7 @@
 				data : "email=" + $("#inputEmail").val(),
 				url : "http://localhost:8080/Aladdin/availability",
 				beforeSend : function() {
-					emailInfo.html("Checking Email...."); //show checking or loading image
+					emailInfo.html("<font style=\"color:red\">Checking Email....</font>"); //show checking or loading image
 				},
 				success : function(data) {
 					
@@ -147,10 +154,11 @@
 					
 					if (data == "0") {
 						emailok = false;
-						emailInfo.html("Email already exists.");
+						emailInfo.html("<font style=\"color:red\">Email already exists.</font>");
+						
 					} else {
 						emailok = true;
-						emailInfo.html("Email is Available.");
+						emailInfo.html("<font style=\"color:green\">Email is Available.</font>");
 					}
 				}
 			});

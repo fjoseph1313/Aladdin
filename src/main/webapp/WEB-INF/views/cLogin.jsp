@@ -42,8 +42,8 @@
 
 
 					<c:if test="${not empty error}">
-						<div class="error">
-							Your login attempt was not successful, try again.<br /> Reason:
+						<div style="color:red;margin: 0 0 0 14px">
+							<strong>Error!</strong>Your login attempt was not successful, try again.<br /> Reason:
 							${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
 						</div>
 					</c:if>
