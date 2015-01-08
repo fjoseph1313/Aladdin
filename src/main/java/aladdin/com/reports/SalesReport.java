@@ -20,9 +20,11 @@ import net.sf.jasperreports.engine.JRDataSource;
 public class SalesReport {
 
 	private List<Cart> carts;
+	private String filename;
 
-	public SalesReport(List<Cart> carts) {
+	public SalesReport(List<Cart> carts, String filename) {
 		this.carts = carts;
+		this.filename = filename;
 
 	}
 
@@ -65,7 +67,7 @@ public class SalesReport {
 					.pageFooter(Templates.footerComponent)
 					.setDataSource(createDataSource())
 					.toPdf(filePath = new FileOutputStream(
-							Templates.TEMP_STORAGE + "salesReport.pdf"));
+							Templates.TEMP_STORAGE + filename + ".pdf"));
 
 			filePath.close();
 		} catch (DRException e) {
@@ -81,10 +83,12 @@ public class SalesReport {
 				"productName", "productDescription", "quantityBought");
 
 		for (Cart c : carts) {
-			dataSource.add(c.getProduct().getProductCategory()
-					.getCategoryDescription(), c.getProduct().getProductName(),
-					c.getProduct().getProductDescription(),
-					c.getQuantity());
+			if (c.getOrder() != null) {
+				dataSource.add(c.getProduct().getProductCategory()
+						.getCategoryDescription(), c.getProduct()
+						.getProductName(), c.getProduct()
+						.getProductDescription(), c.getQuantity());
+			}
 		}
 
 		return dataSource;

@@ -16,11 +16,14 @@ public class CartDAOImpl extends HibernateDAO<Cart, Long> implements CartDAO {
 	}
 
 	public List<Cart> findCartsByDates(Date fromDate, Date toDate) {
+		System.out.println("===========FROM:"+fromDate.toString());
+		System.out.println("===========TO:"+toDate.toString());
 		String HQL = "FROM Cart ct WHERE ct.order.orderCreateDate > :fromDate AND ct.order.orderCreateDate < :toDate";
 		Query query = HibernateUtil.getSession().createQuery(HQL);
 		query.setParameter("fromDate", fromDate);
 		query.setParameter("toDate", toDate);
 		List<Cart> carts = query.list();
+		System.out.println("===========VALUES:"+carts.size());
 		return carts;
 	}
 
@@ -31,4 +34,16 @@ public class CartDAOImpl extends HibernateDAO<Cart, Long> implements CartDAO {
 		List<Cart> carts = query.list();
 		return carts;
 	}
+
+	public List<Cart> findCartsByVendorDates(Vendor vendor, Date fromDate,
+			Date toDate) {
+		String HQL = "FROM Cart ct WHERE ct.order.orderCreateDate > :fromDate AND ct.order.orderCreateDate < :toDate AND ct.product.vendor = :vendor";
+		Query query = HibernateUtil.getSession().createQuery(HQL);
+		query.setParameter("fromDate", fromDate);
+		query.setParameter("toDate", toDate);
+		query.setParameter("vendor", vendor);
+		List<Cart> carts = query.list();
+		return carts;
+	}
+
 }

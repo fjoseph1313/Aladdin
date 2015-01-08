@@ -101,6 +101,7 @@
 											id="inputEmail" placeholder="Email" style="width: 200px"
 											name="emailAddress"
 											data-errormessage-value-missing="Email is required!">
+											<span id='username_availability_result'></span>  
 									</div>
 								</div>
 								<div class="form-group">
