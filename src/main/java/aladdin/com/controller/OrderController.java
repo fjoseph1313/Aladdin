@@ -106,7 +106,7 @@ public class OrderController {
 		
 		}
 		
-		return result;
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
