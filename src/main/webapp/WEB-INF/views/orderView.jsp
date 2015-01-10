@@ -147,16 +147,12 @@
 							<div class="form-group">
 								<div class="col-sm-offset-1 col-sm-11">
 									<a href="<spring:url value="/order/cancel" />">Cancel Order </a> |
-									
-			<c:choose>
-				<c:when test="${userDetails != null}">
-					<c:url value="/j_spring_security_logout" var="logoutUrl" />
+			
 					<a href="<spring:url value="/payment" />"> Checkout </a> |
-				</c:when>
-				<c:otherwise>
+			
+				
 					<a href="<spring:url value="/guestCheckout" />"> Checkout as Guest </a> |
-				</c:otherwise>
-			</c:choose>
+				
 									
 									
 									 

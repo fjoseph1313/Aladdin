@@ -542,7 +542,7 @@ public class OrderController {
 	// restfulness alertness
 	public String callRestfulness(String uri) {
 		RestTemplate restTemp = new RestTemplate();
-		String url = "http://localhost:8080/springhibernate/validate/" + uri;
+		String url = "http://localhost:8080/AladdinCardRest/validate/" + uri;
 		String result = restTemp.getForObject(url, String.class);
 
 		return result;
