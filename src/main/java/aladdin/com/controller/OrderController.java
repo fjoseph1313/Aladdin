@@ -2,6 +2,7 @@ package aladdin.com.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -119,6 +120,11 @@ public class OrderController {
 	public String displayCart(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		List<Cart> currentCart = (List<Cart>) session.getAttribute("userCart");
+		if(currentCart.size() == 0)
+		{
+			return "redirect:/";
+		}
+		
 		// send total quantity and total amount to be paid
 		double amt = 0;
 		int qua = 0;
@@ -460,8 +466,38 @@ public class OrderController {
 		currentCart = null;
 		session.setAttribute("userCart", currentCart);
 
-		return "index";
+		return "redirect:/";
 	}
+	
+	@RequestMapping(value = "/removeItem/{id}", method = RequestMethod.GET)
+	public String removeFromCart(@PathVariable String id, HttpServletRequest request, Model model)
+	{
+		HttpSession session = request.getSession();
+		List<Cart> currentCart = (List<Cart>) session.getAttribute("userCart");
+		//remove from the online cart and set it to session
+		
+		for(int i = 0; i < currentCart.size(); i ++)
+		{
+			Cart cart = (Cart)currentCart.get(i);
+			System.out.println("current cart id ==========================="+cart.getId());
+			System.out.println("From browser id "+id);
+			if(cart.getId() == Long.parseLong(id))
+		 	{
+				currentCart.remove(cart);
+				System.out.println("Removed : =========="+cart.getQuantity());
+		 	}
+			System.out.println("Traversed : ++++++++++++++++++"+cart.getQuantity());
+		}
+		cartDao.beginTransaction();
+		Cart cart = cartDao.findByPrimaryKey(Long.parseLong(id));
+		cartDao.delete(cart);
+		cartDao.commitTransaction();
+		
+		 session.setAttribute("userCart", currentCart);
+		 model.addAttribute("thisCart", currentCart);
+		 return "redirect:/cart";
+	}
+	
 
 	// stock Manager
 	public List<Cart> updateProductQuantity(List<Cart> cartList) {

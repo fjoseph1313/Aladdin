@@ -86,7 +86,7 @@
 										Quantity</label>
 									<div class="col-sm-9">
 										<input type="text"
-											class="form-control validate[required] text-input"
+											class="form-control validate[required,funcCall[checkQuantity]] text-input"
 											data-errormessage-value-missing="Product Quantity is required!"
 											id="inputQuantity" placeholder="Product Quantity"
 											style="width: 200px" name="quantity">

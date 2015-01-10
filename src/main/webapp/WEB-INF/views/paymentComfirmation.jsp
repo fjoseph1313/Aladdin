@@ -128,10 +128,10 @@
 							</table>
 							<div class="row">
 								<div class="col-md-6" style="text-align: right">
-									<b>Total Quantity : ${paidOrder.orderAmount }</b>
+									<b>Total Order Amount:$${paidOrder.quantity  }</b>
 								</div>
 								<div class="col-md-6" style="text-align: right">
-									<b>Total Order Amount:$${paidOrder.quantity  }</b>
+									<b>Total Quantity : ${paidOrder.orderAmount }</b>
 								</div>
 							</div>
 							<div class="form-group">

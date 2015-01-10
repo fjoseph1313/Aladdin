@@ -17,7 +17,11 @@ public class CartDAOImpl extends HibernateDAO<Cart, Long> implements CartDAO {
 	
 	public int clearNullOrderCarts()
 	{
-		String hql = "FROM Cart ct WHERE ct.order = null";
+		String hql = "FROM Cart ct WHERE ct.order == null";
+		
+		//String hql = "from Cart vd join fetch vd.order u where "
+		//		+ " u.id is null" ;
+		
 		Query query = HibernateUtil.getSession().createQuery(hql);
 		int rows = query.executeUpdate();
 		return rows;

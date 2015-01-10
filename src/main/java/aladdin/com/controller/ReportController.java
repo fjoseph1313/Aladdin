@@ -298,7 +298,7 @@ public class ReportController {
 		List<Cart> carts = cartDao.findCartsByDates(fromDate, toDate);
 		cartDao.commitTransaction();
 
-		SalesReport salesReport = new SalesReport(carts, YEARLY_SALES_REPORT);
+		SalesReport salesReport = new SalesReport(carts, vendor.getBusinessName() + YEARLY_SALES_REPORT);
 		salesReport.build();
 		byte[] contents = loadFile(Templates.TEMP_STORAGE
 				+ vendor.getBusinessName() + YEARLY_SALES_REPORT + ".pdf");

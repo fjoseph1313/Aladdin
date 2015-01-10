@@ -42,7 +42,7 @@ public class Product {
 	@JoinColumn(name = "productCat")
 	private ProductCategory productCategory;
 	
-	@OneToMany(mappedBy = "product", targetEntity = Cart.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "product", targetEntity = Cart.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Cart> cart; // cart as order_details
 

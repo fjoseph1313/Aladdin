@@ -55,6 +55,25 @@
 			return "Please give a valid  zip";
 		}
 	}
+	
+	/****
+	function for quantity
+	 ****/
+
+	function checkQuantity(field, rules, i, options) {
+
+		if (!(/^-*[0-9,\.]+$/
+				.test(field.val()))) {
+			// this allows the use of i18 for the error msgs
+			return "Please give a valid  quantity";
+		}
+		
+		if (field.val()<1) {
+			// this allows the use of i18 for the error msgs
+			return "Please give a valid  quantity";
+		}
+	}
+
 
 	/****
 	function for phone
@@ -121,6 +140,9 @@
 		});
 
 		jQuery("#addCategoryForm").validationEngine({
+			autoHidePrompt : true
+		});
+		jQuery("#guestPayment").validationEngine({
 			autoHidePrompt : true
 		});
 

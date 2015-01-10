@@ -42,7 +42,7 @@
 							<legend class="registrationLegend">Guest Checkout - Shipping & Payment Information </legend>
 							<c:url var="addUrl" value="/customer-register/submit"/>
 							<form:form class="form-horizontal"  
-								action = "guestpayment" method = "post">
+								action = "guestpayment" method = "post" id="guestPayment">
 							<fieldset>
 							<legend class="registrationLegend">Shipping Information</legend>
 								<div class="form-group">
@@ -88,6 +88,7 @@
 											id="inputEmail" placeholder="Email" style="width: 200px"
 											name="emailAddress"
 											data-errormessage-value-missing="Email is required!">
+											<span id='username_availability_result'></span>
 									</div>
 								</div>
 								
